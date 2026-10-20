@@ -106,6 +106,17 @@
     </div>
     
 
+    {{-- Lightbox foto: dipakai semua gambar konten (lihat skrip zoom di bawah) --}}
+    <div class="modal fade" id="zoomModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 bg-transparent" data-bs-dismiss="modal">
+                <div class="modal-body text-center p-2">
+                    <img id="zoomModalImage" class="img-fluid rounded" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{asset('lib/wow/wow.min.js')}}"></script>
@@ -215,6 +226,36 @@
             $(window).on('load', function () { moveTo($current, true); });
 
             init();
+        })(jQuery);
+    </script>
+    <script>
+        // Zoom foto: gambar konten (di luar link, tombol, dan navbar) dibuka di #zoomModal saat diklik.
+        (function ($) {
+            var SKIP_SRC = /ui-avatars\.com|auth-cover-login-mask|Play_Store|histats/i;
+
+            function canZoom(img) {
+                return !img.closest('a, button, .navbar, [data-no-zoom]') && !SKIP_SRC.test(img.currentSrc || img.src);
+            }
+
+            var modal = new bootstrap.Modal(document.getElementById('zoomModal'));
+            var $content = $('.bg-light.border');
+
+            $content.on('click', 'img', function () {
+                if (!canZoom(this)) return;
+                $('#zoomModalImage').attr({ src: this.currentSrc || this.src, alt: this.alt });
+                modal.show();
+            });
+
+            // Tandai gambar yang bisa di-zoom (termasuk yang dimuat lewat AJAX) agar kursor berubah
+            function mark(root) {
+                $(root).find('img').addBack('img').each(function () {
+                    this.classList.toggle('zoomable', canZoom(this));
+                });
+            }
+            mark($content);
+            new MutationObserver(function (records) {
+                records.forEach(function (r) { r.addedNodes.forEach(function (n) { if (n.nodeType === 1) mark(n); }); });
+            }).observe($content[0], { childList: true, subtree: true });
         })(jQuery);
     </script>
     @yield('script')

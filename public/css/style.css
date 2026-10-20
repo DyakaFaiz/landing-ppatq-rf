@@ -805,3 +805,13 @@ iframe {
         height: 160px;
     }
 }
+
+/********** Zoom foto **********/
+img.zoomable {
+    cursor: zoom-in;
+}
+
+#zoomModalImage {
+    max-height: 85vh;
+    object-fit: contain;
+}

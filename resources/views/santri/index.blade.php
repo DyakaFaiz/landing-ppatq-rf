@@ -135,9 +135,7 @@
                             <div class="col-5 d-flex justify-content-center align-items-center">
                                 <img src="https://manajemen.ppatq-rf.id/assets/img/upload/photo/{{ $santri->photo }}"
                                     class="img-fluid foto-profil"
-                                    alt="foto profil {{ $santri->nama }}"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#imageModal">
+                                    alt="foto profil {{ $santri->nama }}">
                             </div>
                             <div class="p-1 d-flex flex-column gap-3 col py-2">
                                 <h5 class="profil-nama fs-6 mb-0 text-center text-uppercase">{{ $santri->nama }}</h5>
@@ -197,9 +195,7 @@
                             <div class="col-5 d-flex justify-content-center align-items-center">
                                 <img src="https://manajemen.ppatq-rf.id/assets/img/upload/photo/{{ $row->photo }}"
                                     class="img-fluid foto-profil"
-                                    alt="foto profil {{ $row->nama }}"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#imageModal">
+                                    alt="foto profil {{ $row->nama }}">
                             </div>
                             <div class="p-1 d-flex flex-column gap-3 col py-2">
                                 <h5 class="profil-nama fs-6 mb-0 text-center text-uppercase">{{ $row->nama }}</h5>
@@ -304,9 +300,7 @@
                                 <div class="col-5 d-flex justify-content-center align-items-center">
                                     <img src="https://manajemen.ppatq-rf.id/assets/img/upload/photo/${ santri.photo }"
                                         class="img-fluid foto-profil"
-                                        alt="foto profil ${ santri.nama }"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#imageModal">
+                                        alt="foto profil ${ santri.nama }">
                                 </div>
                                 <div class="p-1 d-flex flex-column gap-3 col py-2">
                                     <h5 class="profil-nama fs-6 mb-0 text-center text-uppercase">${ santri.nama }</h5>
@@ -368,9 +362,7 @@
                                     <div class="col-5 d-flex justify-content-center align-items-center">
                                         <img src="https://manajemen.ppatq-rf.id/assets/img/upload/photo/${ alumni.photo }"
                                             class="img-fluid foto-profil"
-                                            alt="foto profil ${ alumni.nama }"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#imageModal">
+                                            alt="foto profil ${ alumni.nama }">
                                     </div>
                                     <div class="p-1 d-flex flex-column gap-3 col py-2">
                                         <h5 class="profil-nama fs-6 mb-0 text-center text-uppercase">${ alumni.nama }</h5>
