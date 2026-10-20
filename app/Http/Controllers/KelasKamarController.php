@@ -3,12 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 
 class KelasKamarController extends Controller
 {
+    private function encryptId($id): string
+    {
+        return Crypt::encryptString($id . 'ppatq');
+    }
+
+    /**
+     * Kembalikan id asli dari id terenkripsi di URL; 404 jika tidak valid.
+     */
+    private function decryptId(string $idEnkripsi): int
+    {
+        try {
+            $idAsli = Crypt::decryptString($idEnkripsi);
+        } catch (DecryptException $e) {
+            abort(404);
+        }
+
+        abort_unless(preg_match('/^(\d+)ppatq$/', $idAsli, $cocok), 404);
+
+        return (int) $cocok[1];
+    }
+
     public function index()
     {
         try {
@@ -17,7 +40,11 @@ class KelasKamarController extends Controller
             $queryKelas = DB::table('ref_kelas')
             ->select('ref_kelas.employee_id', 'employee_new.nama AS nama_guru', 'ref_kelas.id AS id_kelas', 'ref_kelas.name')
             ->leftJoin('employee_new', 'ref_kelas.employee_id','=','employee_new.id')
-            ->get();
+            ->get()
+            ->map(function ($kelas) {
+                $kelas->id_kelas = $this->encryptId($kelas->id_kelas);
+                return $kelas;
+            });
 
             $queryKamar = DB::table('ref_kamar')
             ->select(
@@ -26,7 +53,11 @@ class KelasKamarController extends Controller
             )
             ->orderByRaw("CAST(SUBSTRING_INDEX(code, 'a', 1) AS UNSIGNED) ASC, code ASC")
             ->leftJoin('employee_new', 'ref_kamar.employee_id', '=', 'employee_new.id')
-            ->get();
+            ->get()
+            ->map(function ($kamar) {
+                $kamar->id = $this->encryptId($kamar->id);
+                return $kamar;
+            });
 
             $data = [
                 'dataKelas'  => $queryKelas,
@@ -39,8 +70,10 @@ class KelasKamarController extends Controller
         }
     }
 
-    public function showKelas($id)
+    public function showKelas($idEnkripsi)
     {
+        $id = $this->decryptId($idEnkripsi);
+
         try {
             $kelasData = DB::table('ref_kelas')
             ->leftJoin('employee_new', 'ref_kelas.employee_id', '=', 'employee_new.id')
@@ -88,8 +121,10 @@ class KelasKamarController extends Controller
         }
     }
 
-    public function showKamar($id)
+    public function showKamar($idEnkripsi)
     {
+        $id = $this->decryptId($idEnkripsi);
+
         // Tahun ajaran yang sedang aktif; jika belum ada yang aktif, pakai yang terbaru
         $tahunAjaran = DB::table('ref_tahun_ajaran')->where('is_aktif', 1)->first()
             ?? DB::table('ref_tahun_ajaran')->latest()->first();
