@@ -40,6 +40,7 @@ class KesantrianController extends Controller
             ->leftJoin('ref_kelas', 'santri_detail.kelas', '=', 'ref_kelas.code')
             ->leftJoin('employee_new AS guru_murroby', 'ref_kamar.employee_id', '=', 'guru_murroby.id')
             ->leftJoin('employee_new AS wali_kelas', 'ref_kelas.employee_id', '=', 'wali_kelas.id')
+            ->whereNull('santri_detail.deleted_at')
             ->inRandomOrder();
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 
 class KelasKamarController extends Controller
@@ -41,8 +42,6 @@ class KelasKamarController extends Controller
     public function showKelas($id)
     {
         try {
-            $tahunAjaran = DB::table('ref_tahun_ajaran')->latest()->first();
-
             $kelasData = DB::table('ref_kelas')
             ->leftJoin('employee_new', 'ref_kelas.employee_id', '=', 'employee_new.id')
             ->where('ref_kelas.id', '=', $id)
@@ -53,33 +52,36 @@ class KelasKamarController extends Controller
             )
             ->first();
 
-            $querySantriDetail = DB::table('santri_detail')
+            abort_if(!$kelasData, 404);
+
+            $query = DB::table('santri_detail')
             ->select(
                 'santri_detail.no_induk',
-                'santri_detail.nama', 
-                'santri_detail.photo AS fotoSantri', 
-                'santri_detail.kelas', 
-                'santri_detail.kecamatan', 
-                'ref_kamar.employee_id AS kamar_employee_id', 
-                'ref_kelas.employee_id AS kelas_employee_id', 
-                'ref_kelas.code AS nama_kelas', 
+                'santri_detail.nama',
+                'santri_detail.photo AS fotoSantri',
+                'santri_detail.kelas',
+                'santri_detail.kecamatan',
+                'ref_kamar.employee_id AS kamar_employee_id',
+                'ref_kelas.employee_id AS kelas_employee_id',
+                'ref_kelas.code AS nama_kelas',
                 'employee_new.nama AS guru_murroby',
                 'ref_tahfidz.name AS kelasTahfidz'
             )
             ->leftJoin('ref_kamar', 'santri_detail.kamar_id', '=', 'ref_kamar.id')
             ->leftJoin('ref_kelas', 'santri_detail.kelas', '=', 'ref_kelas.code')
             ->leftJoin('ref_tahfidz', 'santri_detail.tahfidz_id', '=', 'ref_tahfidz.id')
-            ->leftJoin('santri_tahfidz', 'santri_detail.id', '=', 'santri_tahfidz.santri_id')
             ->leftJoin('employee_new', 'ref_kamar.employee_id', '=', 'employee_new.id')
             ->where('ref_kelas.id', '=', $id)
-            ->distinct();
+            ->whereNull('santri_detail.deleted_at')
+            ->distinct()
+            ->get();
 
-            $jumlahIsi = $querySantriDetail->count();
-            $query = $querySantriDetail->get();
+            $jumlahIsi = $query->count();
 
-            // Mengembalikan data dalam format JSON
             return view('kelas-kamar.detail-kelas', compact('query','kelasData','jumlahIsi'));
 
+        } catch (HttpExceptionInterface $e) {
+            throw $e; // 404 dari abort_if jangan diubah jadi 500
         } catch (\Exception $e) {
             // Mengembalikan pesan error jika terjadi exception
             return response()->json(['error' => $e->getMessage()], 500);
@@ -88,8 +90,9 @@ class KelasKamarController extends Controller
 
     public function showKamar($id)
     {
-
-        $tahunAjaran = DB::table('ref_tahun_ajaran')->latest()->first();
+        // Tahun ajaran yang sedang aktif; jika belum ada yang aktif, pakai yang terbaru
+        $tahunAjaran = DB::table('ref_tahun_ajaran')->where('is_aktif', 1)->first()
+            ?? DB::table('ref_tahun_ajaran')->latest()->first();
 
         $dataKamar = DB::table('ref_kamar')
         ->leftJoin('employee_new', 'ref_kamar.employee_id', '=', 'employee_new.id')
@@ -100,6 +103,8 @@ class KelasKamarController extends Controller
             'ref_kamar.name AS nama_kamar'
         )
         ->first();
+
+        abort_if(!$dataKamar, 404);
 
         $queryKamar = DB::table('santri_kamar')
         ->select(
@@ -122,13 +127,14 @@ class KelasKamarController extends Controller
         ->where('santri_kamar.kamar_id', $id)
         ->where('santri_kamar.status', 1)
         ->where('santri_kamar.tahun_ajaran_id', $tahunAjaran->id)
-        ->distinct()
-        ;
+        ->whereNull('santri_detail.deleted_at')
+        ->distinct();
 
-        $query = $queryKamar->get();
+        // Satu santri bisa tercatat dua kali di santri_kamar, tampilkan sekali saja
+        $query = $queryKamar->get()->unique('santri_id')->values();
 
-        $jumlahIsi = $queryKamar->count();
-        
+        $jumlahIsi = $query->count();
+
         return view('kelas-kamar.detail-kamar', compact('query','dataKamar','jumlahIsi'));
     }
 }
