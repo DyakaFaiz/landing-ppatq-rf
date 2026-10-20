@@ -58,7 +58,7 @@
                                             <div class="ico bi bi-person-add highlight text-success"></div>
                                             <div class="text-block">
                                                 <div class="name">PSB</div>
-                                                <div class="text text-justify">Penerimaan Santri Baru (PSB) adalah proses pendaftaran dan seleksi bagi calon santri yang ingin menempuh pendidikan di pesantren. Proses ini mencakup tahapan pendaftaran, seleksi administrasi, tes akademik, serta wawancara untuk memastikan kesesuaian calon santri dengan lingkungan dan kurikulum pesantren. <a class="fs-6 fw-bold fst-italic" href="https://psb.ppatq-rf.id/">Disini</a></div>
+                                                <div class="text text-justify">Pendaftaran dan seleksi calon santri baru, mulai dari administrasi, tes akademik, hingga wawancara. <a class="fs-6 fw-bold fst-italic" href="https://psb.ppatq-rf.id/">Disini</a></div>
                                             </div>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@
                                             <div class="ico bi bi-wallet-fill highlight text-success"></div>
                                             <div class="text-block">
                                                 <div class="name">Payment</div>
-                                                <div class="text text-justify">Payment adalah layanan pembayaran resmi dari pondok pesantren yang memudahkan santri dan wali santri dalam melakukan transaksi keuangan. Melalui sistem ini, pembayaran biaya pendidikan, asrama, dan administrasi lainnya dapat dilakukan dengan mudah dan aman menggunakan berbagai metode seperti transfer bank, e-wallet, dan kartu kredit. Layanan ini dirancang untuk memastikan kenyamanan dan transparansi dalam setiap transaksi. <a class="fs-6 fw-bold fst-italic" href="https://payment.ppatq-rf.id/">Disini</a></div>
+                                                <div class="text text-justify">Pembayaran biaya pendidikan, asrama, dan administrasi dengan mudah dan aman lewat berbagai metode pembayaran. <a class="fs-6 fw-bold fst-italic" href="https://payment.ppatq-rf.id/">Disini</a></div>
                                             </div>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
                                             <div class="ico bi bi-envelope-arrow-up highlight text-success"></div>
                                             <div class="text-block">
                                                 <div class="name">Sambung Rasa</div>
-                                                <div class="text text-justify">Sambung Rasa adalah layanan komunikasi dan konsultasi yang disediakan oleh pondok pesantren untuk mempererat hubungan antara santri, wali santri, serta pengasuh. Melalui layanan ini, wali santri dapat berinteraksi langsung dengan pihak pondok untuk menyampaikan aspirasi, bertanya seputar perkembangan santri, atau mendapatkan bimbingan terkait kehidupan pesantren. Dengan adanya Sambung Rasa, diharapkan tercipta hubungan yang harmonis dan penuh keberkahan dalam lingkungan pesantren. <a class="fs-6 fw-bold fst-italic" href="https://payment.ppatq-rf.id/index.php/keluhan">Disini</a></div>
+                                                <div class="text text-justify">Layanan komunikasi dan konsultasi bagi wali santri untuk menyampaikan aspirasi atau menanyakan perkembangan santri. <a class="fs-6 fw-bold fst-italic" href="https://payment.ppatq-rf.id/index.php/keluhan">Disini</a></div>
                                             </div>
                                         </div>
                                     </div>
@@ -85,7 +85,7 @@
                                             <div class="ico bi bi-cast highlight text-success"></div>
                                             <div class="text-block">
                                                 <div class="name">Sosial Media</div>
-                                                <div class="text text-justify">Sosial Media adalah sarana informasi dan komunikasi resmi pondok pesantren yang digunakan untuk menyebarkan berita, kegiatan, dan perkembangan pesantren kepada santri, wali santri, serta masyarakat luas. Melalui platform seperti Facebook, Instagram, dan WhatsApp, pondok pesantren dapat berbagi konten inspiratif, jadwal kegiatan, serta pengumuman penting. Dengan adanya sosial media, diharapkan tercipta keterhubungan yang lebih erat antara pesantren dan komunitasnya, serta memudahkan akses informasi secara cepat dan akurat.</div>
+                                                <div class="text text-justify">Kanal resmi pondok untuk berita, kegiatan, dan pengumuman penting bagi santri, wali santri, dan masyarakat.</div>
                                                 <div class="text fs-3 mt-2">
                                                     <span>
                                                         <a href="https://www.tiktok.com/@ppatq.raudlatulfalah?lang=en" class="text-decoration-none">
