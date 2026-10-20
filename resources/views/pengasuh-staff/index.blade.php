@@ -103,6 +103,7 @@
         $(document).ready(function() {
             var PER_PAGE = 4; // Jumlah kartu per klik "Muat Lagi"
             var FOTO_URL = 'https://manajemen.ppatq-rf.id/assets/img/upload/photo/';
+            var SILUET = "{{ asset('img/avatar-siluet.svg') }}";
             var _token = $('meta[name="csrf-token"]').attr('content');
 
             function esc(teks) {
@@ -114,14 +115,13 @@
             }
 
             function kartu(orang) {
-                var avatar = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(orang.nama);
-                var foto = orang.photo ? FOTO_URL + orang.photo : avatar;
+                var foto = orang.photo ? FOTO_URL + orang.photo : SILUET;
                 return `
                     <div class="col-md-3 col-12 wow fadeIn mb-4">
                         <div class="profil-card text-center d-flex flex-column justify-content-center">
                             <div class="d-flex justify-content-center align-items-center">
                                 <img src="${ esc(foto) }" class="img-fluid foto-profil" alt="foto ${ esc(orang.nama) }"
-                                    onerror="this.onerror=null; this.src='${ esc(avatar) }';">
+                                    onerror="this.onerror=null; this.src='${ SILUET }';">
                             </div>
                             <div class="p-1 d-flex flex-column gap-3 py-2">
                                 <h5 class="profil-nama fs-6 mb-0 text-uppercase">${ esc(orang.nama) } ${ orang.alhafidz == 1 ? '<sup>AH</sup>' : '' }</h5>

@@ -411,7 +411,8 @@
             $('#santri-random').html(`
                         <div class="col-6 d-flex flex-column align-items-center">
                             <img loading="lazy" src="https://manajemen.ppatq-rf.id/assets/img/upload/photo/${ santri.photo }"
-                                    class="img-fluid sosmed-foto" alt="foto ${ santri.nama }">
+                                    class="img-fluid sosmed-foto" alt="foto ${ santri.nama }"
+                                    onerror="this.onerror=null; this.src='{{ asset('img/avatar-siluet.svg') }}';">
                         </div>
                         <div class="col">
                             <p class="sosmed-nama text-uppercase mb-0">${ santri.nama }</p>
@@ -425,7 +426,8 @@
             $('#pegawai-random').html(`
                 <div class="col-5 d-flex flex-column align-items-center">
                     <img loading="lazy" src="https://manajemen.ppatq-rf.id/assets/img/upload/photo/${ pegawai.photo }"
-                        class="img-fluid sosmed-foto" alt="foto ${ pegawai.nama }">
+                        class="img-fluid sosmed-foto" alt="foto ${ pegawai.nama }"
+                        onerror="this.onerror=null; this.src='{{ asset('img/avatar-siluet.svg') }}';">
                 </div>
                 <div class="col">
                     <p class="sosmed-nama text-uppercase mb-0">${ pegawai.nama }</p>

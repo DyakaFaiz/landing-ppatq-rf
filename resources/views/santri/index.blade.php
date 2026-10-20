@@ -135,7 +135,8 @@
                             <div class="col-5 d-flex justify-content-center align-items-center">
                                 <img src="https://manajemen.ppatq-rf.id/assets/img/upload/photo/{{ $santri->photo }}"
                                     class="img-fluid foto-profil"
-                                    alt="foto profil {{ $santri->nama }}">
+                                    alt="foto profil {{ $santri->nama }}"
+                                    onerror="this.onerror=null; this.src='{{ asset('img/avatar-siluet.svg') }}';">
                             </div>
                             <div class="p-1 d-flex flex-column gap-3 col py-2">
                                 <h5 class="profil-nama fs-6 mb-0 text-center text-uppercase">{{ $santri->nama }}</h5>
@@ -195,7 +196,8 @@
                             <div class="col-5 d-flex justify-content-center align-items-center">
                                 <img src="https://manajemen.ppatq-rf.id/assets/img/upload/photo/{{ $row->photo }}"
                                     class="img-fluid foto-profil"
-                                    alt="foto profil {{ $row->nama }}">
+                                    alt="foto profil {{ $row->nama }}"
+                                    onerror="this.onerror=null; this.src='{{ asset('img/avatar-siluet.svg') }}';">
                             </div>
                             <div class="p-1 d-flex flex-column gap-3 col py-2">
                                 <h5 class="profil-nama fs-6 mb-0 text-center text-uppercase">{{ $row->nama }}</h5>
@@ -300,7 +302,8 @@
                                 <div class="col-5 d-flex justify-content-center align-items-center">
                                     <img src="https://manajemen.ppatq-rf.id/assets/img/upload/photo/${ santri.photo }"
                                         class="img-fluid foto-profil"
-                                        alt="foto profil ${ santri.nama }">
+                                        alt="foto profil ${ santri.nama }"
+                                        onerror="this.onerror=null; this.src='{{ asset('img/avatar-siluet.svg') }}';">
                                 </div>
                                 <div class="p-1 d-flex flex-column gap-3 col py-2">
                                     <h5 class="profil-nama fs-6 mb-0 text-center text-uppercase">${ santri.nama }</h5>
@@ -362,7 +365,8 @@
                                     <div class="col-5 d-flex justify-content-center align-items-center">
                                         <img src="https://manajemen.ppatq-rf.id/assets/img/upload/photo/${ alumni.photo }"
                                             class="img-fluid foto-profil"
-                                            alt="foto profil ${ alumni.nama }">
+                                            alt="foto profil ${ alumni.nama }"
+                                            onerror="this.onerror=null; this.src='{{ asset('img/avatar-siluet.svg') }}';">
                                     </div>
                                     <div class="p-1 d-flex flex-column gap-3 col py-2">
                                         <h5 class="profil-nama fs-6 mb-0 text-center text-uppercase">${ alumni.nama }</h5>

@@ -231,7 +231,7 @@
     <script>
         // Zoom foto: gambar konten (di luar link, tombol, dan navbar) dibuka di #zoomModal saat diklik.
         (function ($) {
-            var SKIP_SRC = /ui-avatars\.com|auth-cover-login-mask|Play_Store|histats/i;
+            var SKIP_SRC = /ui-avatars\.com|auth-cover-login-mask|avatar-siluet|Play_Store|histats/i;
 
             function canZoom(img) {
                 return !img.closest('a, button, .navbar, [data-no-zoom]') && !SKIP_SRC.test(img.currentSrc || img.src);

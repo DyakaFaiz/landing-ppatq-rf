@@ -62,7 +62,7 @@
 @endsection
 
 @section('content')
-    @php $fotoKosong = asset('img/auth-cover-login-mask-light.png'); @endphp
+    @php $fotoKosong = asset('img/avatar-siluet.svg'); @endphp
     <div class="container py-4 wow fadeInUp" data-wow-delay="0.1s">
         <a href="{{ url()->previous() }}" class="kembali-seamless mb-4">
             <i class="bi bi-arrow-left"></i> Kembali

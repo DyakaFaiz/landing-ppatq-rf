@@ -5,7 +5,7 @@
             <img src="https://manajemen.ppatq-rf.id/assets/img/upload/photo/{{ $foto }}"
                 class="img-fluid foto-profil"
                 alt="foto {{ $nama }}"
-                onerror="this.onerror=null; this.src='{{ asset('img/auth-cover-login-mask-light.png') }}';">
+                onerror="this.onerror=null; this.src='{{ asset('img/avatar-siluet.svg') }}';">
         </div>
         <div class="p-1 d-flex flex-column gap-3 col py-2">
             <h5 class="profil-nama fs-6 mb-0 text-center text-uppercase">{{ $nama }}</h5>
