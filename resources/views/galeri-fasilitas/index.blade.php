@@ -4,135 +4,117 @@
 @endsection
 @section('header')
 <style>
-    .portfolio-item{
-        width:100%;
+    .foto-seamless {
+        display: block;
+        overflow: hidden;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #f8fcf9 0%, #e8f5ed 100%);
     }
-    .portfolio-item .item{
-        /*width:303px;*/
-        float:left;
-        margin-bottom:10px;
-    }
-
-    .card-fasilitas {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin: 30px 0 10px 0;
-        min-width: 0; /* See https://github.com/twbs/bootstrap/pull/22740#issuecomment-305868106 */
-        word-wrap: break-word;
-        background-clip: border-box;
-    }
-
-    #ads .card-notify-badge {
-        position: absolute;
-        left: -10px;
-        top: -20px;
-        text-align: center;
-        border-radius: 30px 30px 30px 30px; 
-        color: #000;
-        padding: 5px 10px;
-        font-size: 14px;
-    }
-
-    #ads .deskripsi-fasilitas {
+    .foto-seamless img {
         display: block;
         width: 100%;
-        margin-top: 10px;
-        text-align: center;
-        border-radius: 12px;
-        color: #000;
-        padding: 8px 12px;
-        font-size: 14px;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    .foto-seamless:hover img {
+        transform: scale(1.06);
+    }
+    .galeri-masonry {
+        column-count: 2;
+        column-gap: 1rem;
+    }
+    .galeri-masonry .foto-galeri {
+        break-inside: avoid;
+        margin-bottom: 1rem;
+    }
+    .foto-fasilitas img {
+        aspect-ratio: 4 / 3;
+    }
+    .fasilitas-seamless .nama {
+        margin-top: 12px;
+        margin-bottom: 4px;
+        color: #1a5632;
+        font-weight: 800;
+        font-size: 0.95rem;
+    }
+    .fasilitas-seamless .deskripsi {
+        color: #5c8c6d;
+        font-size: 0.85rem;
         line-height: 1.4;
     }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" />
 @endsection
+
 @section('content')
+    @php
+        $urlGaleri = 'https://manajemen.ppatq-rf.id/assets/img/upload/foto_galeri/';
+        $urlFasilitas = 'https://manajemen.ppatq-rf.id/assets/img/upload/foto_fasilitas/';
+        $fotoKosong = asset('img/auth-cover-login-mask-light.png');
+        // Rasio foto galeri diacak per foto (berdasarkan nama file, supaya tidak berubah tiap refresh)
+        $rasioGaleri = ['1 / 1', '3 / 4', '4 / 3', '4 / 5', '16 / 10', '2 / 3'];
+    @endphp
     <div class="container py-4 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="row">
+        <div class="row g-5">
             <div class="col-12 col-md-6">
                 <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-                    <h2 class="fw-bold text-green text-uppercase text-green">Galeri PPATQ</h2>
-                    <small class="mb-0">Kumpulan foto Di PPATQ RAUDLATUL FALAH</small>
+                    <h2 class="fw-bold text-green text-uppercase">Galeri PPATQ</h2>
+                    <small class="mb-0">Kumpulan foto di PPATQ RAUDLATUL FALAH</small>
                 </div>
-                <div class="portfolio-item row">
-                    @if ($galeri && !$galeri->isEmpty())
+                @if (!empty($galeri) && count($galeri))
+                    <div class="galeri-masonry">
                         @foreach ($galeri as $row)
-                            <div class="item selfie col-lg-6 col-md-6 col-6 col-sm d-flex align-items-center justify-content-center">
-                                <a href="https://manajemen.ppatq-rf.id/assets/img/upload/foto_galeri/{{ $row->foto }}" class="fancylight popup-btn" data-fancybox-group="light"> 
-                                    <img class="img-fluid shadow-sm" src="https://manajemen.ppatq-rf.id/assets/img/upload/foto_galeri/{{ $row->foto }}" alt="{{ $row->nama }}">
-                                </a>
-                            </div>
+                            <a href="{{ $urlGaleri . $row->foto }}" class="foto-seamless foto-galeri popup-btn d-block" title="{{ $row->nama }}">
+                                <img loading="lazy" src="{{ $urlGaleri . $row->foto }}" alt="{{ $row->nama }}"
+                                    style="aspect-ratio: {{ $rasioGaleri[crc32($row->foto) % count($rasioGaleri)] }};"
+                                    onerror="this.onerror=null; this.src='{{ $fotoKosong }}';">
+                            </a>
                         @endforeach
-                    @else
-                    <div class="text-center">
-                        <small class="text-muted  border-bottom">Galeri Kosong</small>
                     </div>
-                    @endif
-                </div>
+                @else
+                    <div class="text-center">
+                        <small class="text-muted border-bottom">Galeri Kosong</small>
+                    </div>
+                @endif
             </div>
             <div class="col-12 col-md-6">
                 <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-                    <h2 class="fw-bold text-green text-uppercase text-green">Fasilitas PPATQ</h2>
-                    <small class="mb-0">Kumpulan Fasilitas Di PPATQ RAUDLATUL FALAH</small>
+                    <h2 class="fw-bold text-green text-uppercase">Fasilitas PPATQ</h2>
+                    <small class="mb-0">Kumpulan fasilitas di PPATQ RAUDLATUL FALAH</small>
                 </div>
-                <div class="portfolio-item row" id="ads">
-                    {{-- @if ($fasilitas && !$fasilitas->isEmpty())
-                        @foreach ($fasilitas as $row)
-                            <div class="item selfie col-lg-6 col-md-4 col-6 col-sm d-flex align-items-center justify-content-center">
-                                <a href="https://manajemen.ppatq-rf.id/assets/img/upload/foto_fasilitas/{{ $row->foto }}" class="fancylight popup-btn" data-fancybox-group="light"> 
-                                    <img class="img-fluid shadow-sm" src="https://manajemen.ppatq-rf.id/assets/img/upload/foto_fasilitas/{{ $row->foto }}" alt="{{ $row->nama }}">
+                <div class="row g-3">
+                    @forelse ($fasilitas ?? [] as $row)
+                        <div class="col-6">
+                            <div class="fasilitas-seamless text-center">
+                                <a href="{{ $urlFasilitas . $row->foto }}" class="foto-seamless foto-fasilitas popup-btn" title="{{ $row->nama }}">
+                                    <img loading="lazy" src="{{ $urlFasilitas . $row->foto }}" alt="{{ $row->nama }}"
+                                        onerror="this.onerror=null; this.src='{{ $fotoKosong }}';">
                                 </a>
+                                <h6 class="nama">{{ $row->nama }}</h6>
+                                @if ($row->deskripsi)
+                                    <p class="deskripsi mb-0">{{ $row->deskripsi }}</p>
+                                @endif
                             </div>
-                        @endforeach
-                    @else
-                    <div class="text-center">
-                        <small class="text-muted  border-bottom">Fasilitas Kosong</small>
-                    </div>
-                    @endif --}}
-
-                    @if ($fasilitas && !$fasilitas->isEmpty())
-                        @foreach ($fasilitas as $row)
-                            <div class="item selfie col-lg-6 col-md-4 col-6 col-sm d-flex align-items-start justify-content-center">
-                                <div class="card-fasilitas">
-                                    <span class="card-notify-badge bg-green text-white">{{ $row->nama }}</span>
-                                    <a href="https://manajemen.ppatq-rf.id/assets/img/upload/foto_fasilitas/{{ $row->foto }}" class="fancylight popup-btn" data-fancybox-group="light"> 
-                                        <img class="img-fluid shadow-sm" src="https://manajemen.ppatq-rf.id/assets/img/upload/foto_fasilitas/{{ $row->foto }}" alt="{{ $row->nama }}">
-                                    </a>
-                                    <span class="deskripsi-fasilitas bg-white shadow-sm">
-                                        {{ $row->deskripsi }}
-                                    </span>
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
-                    <div class="text-center">
-                        <small class="text-muted  border-bottom">Fasilitas Kosong</small>
-                    </div>
-                    @endif
+                        </div>
+                    @empty
+                        <div class="text-center">
+                            <small class="text-muted border-bottom">Fasilitas Kosong</small>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
 
-
 @section('script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
 <script>
-       $(document).ready(function() {
-
-            var popup_btn = $('.popup-btn');
-                popup_btn.magnificPopup({
-                    type : 'image',
-                    gallery : {
-                        enabled : true
-                    }
-            });
+    $(document).ready(function() {
+        $('.popup-btn').magnificPopup({
+            type: 'image',
+            gallery: { enabled: true }
         });
+    });
 </script>
 @endsection
