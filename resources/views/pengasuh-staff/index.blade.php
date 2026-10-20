@@ -109,15 +109,19 @@
                 return $('<div>').text(teks == null ? '' : teks).html().replace(/"/g, '&quot;');
             }
 
+            function pesan(teks) {
+                return '<div class="col-12 text-center"><small class="text-muted border-bottom">' + esc(teks) + '</small></div>';
+            }
+
             function kartu(orang) {
-                var foto = orang.photo
-                    ? FOTO_URL + orang.photo
-                    : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(orang.nama);
+                var avatar = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(orang.nama);
+                var foto = orang.photo ? FOTO_URL + orang.photo : avatar;
                 return `
                     <div class="col-md-3 col-12 wow fadeIn mb-4">
                         <div class="profil-card text-center d-flex flex-column justify-content-center">
                             <div class="d-flex justify-content-center align-items-center">
-                                <img src="${ esc(foto) }" class="img-fluid foto-profil" alt="foto ${ esc(orang.nama) }">
+                                <img src="${ esc(foto) }" class="img-fluid foto-profil" alt="foto ${ esc(orang.nama) }"
+                                    onerror="this.onerror=null; this.src='${ esc(avatar) }';">
                             </div>
                             <div class="p-1 d-flex flex-column gap-3 py-2">
                                 <h5 class="profil-nama fs-6 mb-0 text-uppercase">${ esc(orang.nama) } ${ orang.alhafidz == 1 ? '<sup>AH</sup>' : '' }</h5>
@@ -127,7 +131,7 @@
             }
 
             // Satu kelompok = kontainer kartu + tombol "Muat Lagi" + kolom pencarian
-            function initKelompok(key, url) {
+            function initKelompok(key, url, label) {
                 var $container = $('#' + key + '-container');
                 var $loadMore = $('#load-more-' + key);
                 var data = [];
@@ -141,6 +145,13 @@
                     $loadMore.toggleClass('d-none', shown >= data.length);
                 }
 
+                function kosong(query) {
+                    $loadMore.addClass('d-none');
+                    $container.html(pesan(query
+                        ? 'Data ' + label + ' "' + query + '" tidak ditemukan'
+                        : 'Data ' + label + ' belum tersedia'));
+                }
+
                 function fetch(query) {
                     $.ajax({
                         url: url,
@@ -150,10 +161,17 @@
                             data = hasil;
                             shown = 0;
                             $container.empty();
-                            render();
+                            if (data.length) {
+                                render();
+                            } else {
+                                kosong(query);
+                            }
                         },
                         error: function(xhr) {
                             console.error(xhr.responseText);
+                            data = [];
+                            $loadMore.addClass('d-none');
+                            $container.html(pesan('Gagal memuat data ' + label + '. Silakan coba lagi.'));
                         }
                     });
                 }
@@ -166,7 +184,7 @@
             }
 
             @foreach ($kelompok as $key => $item)
-                initKelompok('{{ $key }}', "{{ route($item['route']) }}");
+                initKelompok('{{ $key }}', "{{ route($item['route']) }}", @json($item['label']));
             @endforeach
         });
     </script>
