@@ -36,6 +36,23 @@
         color: #2ac5ed;
         font-weight:bold;
     }
+    .sosmed-link i {
+        display: inline-block;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .sosmed-link:hover i {
+        transform: translateY(-3px) scale(1.1);
+    }
+    .sosmed-tiktok:hover i { color: #000000; }
+    .sosmed-facebook:hover i { color: #1877f2; }
+    .sosmed-youtube:hover i { color: #ff0000; }
+    .sosmed-instagram:hover i {
+        color: #e1306c; /* cadangan jika background-clip tidak didukung */
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 </style>
 @endsection
 @section('content')
@@ -88,22 +105,22 @@
                                                 <div class="text text-justify">Kanal resmi pondok untuk berita, kegiatan, dan pengumuman penting bagi santri, wali santri, dan masyarakat.</div>
                                                 <div class="text fs-3 mt-2">
                                                     <span>
-                                                        <a href="https://www.tiktok.com/@ppatq.raudlatulfalah?lang=en" class="text-decoration-none">
+                                                        <a href="https://www.tiktok.com/@ppatq.raudlatulfalah?lang=en" class="text-decoration-none sosmed-link sosmed-tiktok" aria-label="Tiktok">
                                                             <i class="bi bi-tiktok"></i>
                                                         </a>
                                                     </span>
                                                     <span>
-                                                        <a href="https://www.facebook.com/pprtq.r.falah" class="text-decoration-none">
+                                                        <a href="https://www.facebook.com/pprtq.r.falah" class="text-decoration-none sosmed-link sosmed-facebook" aria-label="Facebook">
                                                             <i class="bi bi-facebook"></i>
                                                         </a>
                                                     </span>
                                                     <span>
-                                                        <a href="https://www.youtube.com/@PPATQTV" class="text-decoration-none">
+                                                        <a href="https://www.youtube.com/@PPATQTV" class="text-decoration-none sosmed-link sosmed-youtube" aria-label="Youtube">
                                                             <i class="bi bi-youtube"></i>
                                                         </a>
                                                     </span>
                                                     <span>
-                                                        <a href="https://www.instagram.com/ppatq_raudlatulfalah/" class="text-decoration-none">
+                                                        <a href="https://www.instagram.com/ppatq_raudlatulfalah/" class="text-decoration-none sosmed-link sosmed-instagram" aria-label="Instagram">
                                                             <i class="bi bi-instagram"></i>
                                                         </a>
                                                     </span>
