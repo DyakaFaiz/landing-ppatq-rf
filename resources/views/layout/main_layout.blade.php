@@ -117,6 +117,16 @@
     <!-- Template Javascript -->
     <script src="{{asset('js/main.js')}}"></script>
     <script>
+        window.debounce = function (fn, delay) {
+            var timer;
+            return function () {
+                var context = this, args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(function () { fn.apply(context, args); }, delay);
+            };
+        };
+    </script>
+    <script>
         (function ($) {
             var STORAGE_KEY = 'ppatq:menu-terakhir';
             var $nav = $('#navbarSupportedContent');

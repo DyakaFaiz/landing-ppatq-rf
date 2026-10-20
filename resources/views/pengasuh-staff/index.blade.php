@@ -211,14 +211,9 @@
             });
 
 
-            $('#searchInputUstad').keyup(function(e) {
-                var query = $(this).val();
-                if (query !== '') {
-                    fetchUstad(query);
-                } else {
-                    fetchUstad('');
-                }
-            });
+            $('#searchInputUstad').on('input', debounce(function() {
+                fetchUstad($(this).val());
+            }, 500));
 
             var murrobyData = []; // Menyimpan data murroby
             var currentMurrobyIndex = 0; // Index awal data yang ditampilkan
@@ -283,14 +278,9 @@
                 renderMurroby();
             });
 
-            $('#searchInputMurroby').keyup(function(e) {
-                var query = $(this).val();
-                if (query !== '') {
-                    fetchMurroby(query);
-                } else {
-                    fetchMurroby('');
-                }
-            });
+            $('#searchInputMurroby').on('input', debounce(function() {
+                fetchMurroby($(this).val());
+            }, 500));
 
             var staffData = []; // Menyimpan data staff
             var currentIndexStaff = 0; // Index awal data yang ditampilkan
@@ -356,14 +346,9 @@
             });
 
 
-            $('#searchInputStaff').keyup(function(e) {
-                var query = $(this).val();
-                if (query !== '') {
-                    fetchStaff(query);
-                } else {
-                    fetchStaff('');
-                }
-            });
+            $('#searchInputStaff').on('input', debounce(function() {
+                fetchStaff($(this).val());
+            }, 500));
 
             fetchUstad('');
             fetchMurroby('');

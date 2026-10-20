@@ -135,14 +135,9 @@
                 });
             }
 
-            $('#searchInputAlumni').keyup(function(e) {
-                var query = $(this).val();
-                if (query !== '') {
-                    fetchAlumni(query);
-                } else {
-                    fetchAlumni('');
-                }
-            });
+            $('#searchInputAlumni').on('input', debounce(function() {
+                fetchAlumni($(this).val());
+            }, 500));
         });
     </script>
 @endsection

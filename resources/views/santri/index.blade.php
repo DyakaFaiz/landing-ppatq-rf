@@ -344,15 +344,10 @@
                 });
             }
 
-            // Listen for keyup event on #searchInput
-            $('#searchInput').keyup(function(e) {
-                var query = $(this).val();
-                if (query !== '') {
-                    fetchSantri(query);
-                } else {
-                    fetchSantri('');
-                }
-            });
+            // Listen for input on #searchInput (debounce 500ms)
+            $('#searchInput').on('input', debounce(function() {
+                fetchSantri($(this).val());
+            }, 500));
 
             function fetchAlumni(query) 
             {
@@ -457,14 +452,9 @@
                 });
             }
 
-            $('#searchInputAlumni').keyup(function(e) {
-                var query = $(this).val();
-                if (query !== '') {
-                    fetchAlumni(query);
-                } else {
-                    fetchAlumni('');
-                }
-            });
+            $('#searchInputAlumni').on('input', debounce(function() {
+                fetchAlumni($(this).val());
+            }, 500));
 
             function fetchCalon(query) 
             {
@@ -515,14 +505,9 @@
                 });
             }
 
-            $('#searchInputCalon').keyup(function(e) {
-                var query = $(this).val();
-                if (query !== '') {
-                    fetchCalon(query);
-                } else {
-                    fetchCalon('');
-                }
-            });
+            $('#searchInputCalon').on('input', debounce(function() {
+                fetchCalon($(this).val());
+            }, 500));
         });
     </script>
 @endsection
