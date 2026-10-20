@@ -67,9 +67,9 @@ class KesantrianController extends Controller
     {
         // Daftar calon dan santri aktif tidak menampilkan link halaman, jadi tidak perlu COUNT(*)
         $data = [
-            'santriAktif'  => $this->santriAktifQuery()->limit(6)->get(),
-            'santriAlumni' => $this->alumniQuery()->paginate(4),
-            'santriCalon'  => $this->calonSantriQuery()->limit(4)->get(),
+            'santriAktif'  => $this->santriAktifQuery()->limit(6)->get()->map(fn ($row) => $this->rapikanTeks($row)),
+            'santriAlumni' => $this->alumniQuery()->paginate(4)->through(fn ($row) => $this->rapikanTeks($row)),
+            'santriCalon'  => $this->calonSantriQuery()->limit(4)->get()->map(fn ($row) => $this->rapikanTeks($row)),
         ];
 
         return view('santri.index', $data);
@@ -108,6 +108,50 @@ class KesantrianController extends Controller
     }
 
     /**
+     * Rapikan teks yang tampil di card: spasi, huruf kapital nama, gelar, kelas, dan jenis kelamin.
+     */
+    private function rapikanTeks(object $row): object
+    {
+        foreach (['nama', 'guru_murroby', 'wali_kelas'] as $field) {
+            if (isset($row->$field)) {
+                $row->$field = $this->rapikanNama($row->$field);
+            }
+        }
+
+        if (isset($row->kelas)) {
+            $row->kelas = mb_strtoupper(trim($row->kelas));
+        }
+
+        if (isset($row->jenis_kelamin)) {
+            $row->jenis_kelamin = match (strtoupper(trim($row->jenis_kelamin))) {
+                'L'     => 'Laki-laki',
+                'P'     => 'Perempuan',
+                default => trim($row->jenis_kelamin),
+            };
+        }
+
+        return $row;
+    }
+
+    /**
+     * "MUhammad  fatikhul amin, S. Pd" => "Muhammad Fatikhul Amin, S.Pd"
+     * Huruf kapital hanya diubah pada bagian nama; gelar setelah koma dipertahankan.
+     */
+    private function rapikanNama(string $nama): string
+    {
+        $nama = trim(preg_replace('/\s+/u', ' ', $nama));
+        [$namaDepan, $gelar] = array_pad(explode(',', $nama, 2), 2, null);
+
+        $hasil = mb_convert_case(trim($namaDepan), MB_CASE_TITLE, 'UTF-8');
+
+        if ($gelar !== null && trim($gelar) !== '') {
+            $hasil .= ', ' . preg_replace('/\.\s+(?=\p{L})/u', '.', trim($gelar));
+        }
+
+        return $hasil;
+    }
+
+    /**
      * Cari $search di salah satu kolom $columns (LIKE), lalu kembalikan hasilnya sebagai JSON terpaginasi.
      */
     private function searchResponse($query, ?string $search, array $columns)
@@ -121,7 +165,9 @@ class KesantrianController extends Controller
                 });
             }
 
-            return response()->json($query->paginate(self::PER_PAGE));
+            return response()->json(
+                $query->paginate(self::PER_PAGE)->through(fn ($row) => $this->rapikanTeks($row))
+            );
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
