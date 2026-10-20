@@ -25,11 +25,6 @@ class KelasKamarController extends Controller
             )
             ->orderByRaw("CAST(SUBSTRING_INDEX(code, 'a', 1) AS UNSIGNED) ASC, code ASC")
             ->leftJoin('employee_new', 'ref_kamar.employee_id', '=', 'employee_new.id')
-            ->whereIn('ref_kamar.id', function ($query) use ($tahunAjaran) {
-                $query->select('kamar_id')
-                    ->from('santri_kamar')
-                    ->where('tahun_ajaran_id', $tahunAjaran->id);
-            })
             ->get();
 
             $data = [
