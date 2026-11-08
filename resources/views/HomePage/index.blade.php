@@ -355,7 +355,7 @@
                     <div class="row mt-5">
                         <div class="col-12 col-sm-9 px-4">
                             <div class="d-flex flex-column flex-md-row p-4 gap-5">
-                                <img loading="lazy" src="https://ppatq-rf.sch.id/wp-content/uploads/2013/04/abah-sohib.png"
+                                <img loading="lazy" src="{{asset('img/abah-sohib2.jpeg')}}"
                                 class="rounded-circle img-fluid mb-lg-0" alt="foto abah" width="100" height="200">
                                 <figure>
                                     <blockquote class="blockquote">
