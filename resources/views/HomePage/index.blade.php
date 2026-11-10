@@ -171,31 +171,14 @@
                                 <div class="blog-img position-relative overflow-hidden">
                                     <div class="overflow-hidden">
                                     @php
-                                    if (strpos($berita->thumbnail, 'http') !== false) {
-                                        $url = $berita->thumbnail;
-                                    } else {
-                                        $url = "https://manajemen.ppatq-rf.id/assets/img/upload/berita/thumbnail/" . $berita->thumbnail;
-                                    }
-
-                                    //if ($url && filter_var($url, FILTER_VALIDATE_URL)) {
-                                    
-                                    if (!empty($url)) {
-                                        $headers = @get_headers($url);
-                                        //$exists = $headers && strpos($headers[0], '200') !== false;
-                                        $exists = true;
-                                    } else {
-                                        $exists = false;
-                                    }
+                                        $url = str_contains($berita->thumbnail, 'http')
+                                            ? $berita->thumbnail
+                                            : 'https://manajemen.ppatq-rf.id/assets/img/upload/berita/thumbnail/' . $berita->thumbnail;
                                     @endphp
-                                    @if ($exists !== false)
                                     <a class="text-decoration-none text-dark" href="{{ route('berita.detail', ['id_berita' => $berita->id]) }}">
-                                        <img loading="lazy" class="img-fluid rounded" src="{{$url}}"  alt="Gambar Berita" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <img loading="lazy" class="img-fluid rounded" src="{{ $url }}" alt="Gambar Berita"
+                                            onerror="this.onerror=null; this.src='{{ asset('img/auth-cover-login-mask-light.png') }}';">
                                     </a>
-                                    @else
-                                    <a class="text-decoration-none text-dark" href="{{ route('berita.detail', ['id_berita' => $berita->id]) }}">
-                                        <img loading="lazy" class="img-fluid rounded" src="{{asset('img/auth-cover-login-mask-light.png')}}"   alt="Gambar Berita" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                    </a>
-                                    @endif
                                     </div>
                                 </div>
                                 <div class="p-4">

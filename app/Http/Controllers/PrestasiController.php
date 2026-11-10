@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class PrestasiController extends Controller
 {
     public function index(){
-        $data["prestasi"] = DB::table("prestasi")
+        $data["prestasi"] = Cache::remember('prestasi.semua', 600, fn () => DB::table("prestasi")
         ->select(
             "prestasi.*",
             "santri_detail.nama AS namaSantri",
         )
         ->leftJoin("santri_detail", "santri_detail.no_induk", "=", "prestasi.no_induk")
         ->orderBy("created_at", "desc")
-        ->get();
+        ->get());
 
         $jenisOptions = [
             'olah-raga' => 'Olah raga',

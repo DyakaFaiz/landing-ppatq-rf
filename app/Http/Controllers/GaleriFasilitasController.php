@@ -2,33 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-
-use Illuminate\Support\Facades\Crypt;
 
 class GaleriFasilitasController extends Controller
 {
     public function index(){
-        $queryGaleri = DB::table('galeri')
-        ->inRandomOrder()
-        ->get()
-        ->map(function ($item) {
-            $item->id = Crypt::encryptString($item->id . "ppatq");
-            return $item;
-        });
-
-        $queryFasilitas = DB::table('fasilitas')
-        ->inRandomOrder()
-        ->get()
-        ->map(function ($item) {
-            $item->id = Crypt::encryptString($item->id . "ppatq");
-            return $item;
-        });
-
+        // Query-nya disimpan sementara; urutan acak dilakukan di PHP agar tetap berganti tiap kunjungan
         $data = [
-            'galeri' => $queryGaleri,
-            'fasilitas' => $queryFasilitas,
+            'galeri' => Cache::remember('galeri.semua', 600, fn () => DB::table('galeri')
+                ->select('nama', 'foto')
+                ->get())->shuffle(),
+            'fasilitas' => Cache::remember('fasilitas.semua', 600, fn () => DB::table('fasilitas')
+                ->select('nama', 'deskripsi', 'foto')
+                ->get())->shuffle(),
         ];
 
         return view('galeri-fasilitas.index', $data);

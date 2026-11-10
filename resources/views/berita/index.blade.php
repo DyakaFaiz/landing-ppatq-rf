@@ -20,32 +20,14 @@
                             <div class="blog-img position-relative overflow-hidden">
                                 <div class="overflow-hidden">
                                     @php
-                                    Carbon\Carbon::setLocale('id');
-                                    if (strpos($berita->thumbnail, 'http') !== false) {
-                                        $url = $berita->thumbnail;
-                                    } else {
-                                        $url = "https://manajemen.ppatq-rf.id/assets/img/upload/berita/thumbnail/" . $berita->thumbnail;
-                                    }
-                                    
-                                    if (!empty($url)) {
-                                        // Dapatkan headers dari URL
-                                        $headers = @get_headers($url);
-                                        // $exists = strpos($headers[0], '200') !== false;
-                                        $exists = true;
-                                    } else {
-                                        $exists = false; // URL kosong  
-                                    }
-
-                                @endphp
-                                @if ($exists !== false)
-                                <a class="text-decoration-none text-dark" href="{{ route('berita.detail', ['id_berita' => $berita->id]) }}">
-                                    <img class="img-fluid rounded" src="{{$url}}"  alt="Gambar Berita" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                </a>
-                                @else
-                                <a class="text-decoration-none text-dark" href="{{ route('berita.detail', ['id_berita' => $berita->id]) }}">
-                                    <img class="img-fluid rounded" src="{{asset('img/auth-cover-login-mask-light.png')}}"   alt="Gambar Berita" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                </a>
-                                @endif
+                                        $url = str_contains($berita->thumbnail, 'http')
+                                            ? $berita->thumbnail
+                                            : 'https://manajemen.ppatq-rf.id/assets/img/upload/berita/thumbnail/' . $berita->thumbnail;
+                                    @endphp
+                                    <a class="text-decoration-none text-dark" href="{{ route('berita.detail', ['id_berita' => $berita->id]) }}">
+                                        <img class="img-fluid rounded" src="{{ $url }}" alt="Gambar Berita"
+                                            onerror="this.onerror=null; this.src='{{ asset('img/auth-cover-login-mask-light.png') }}';">
+                                    </a>
                                 </div>
                             </div>
                             <div class="p-4">

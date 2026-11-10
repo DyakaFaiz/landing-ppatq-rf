@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -35,26 +36,27 @@ class KelasKamarController extends Controller
     public function index()
     {
         try {
-            $tahunAjaran = DB::table('ref_tahun_ajaran')->latest()->first();
-
-            $queryKelas = DB::table('ref_kelas')
+            // Daftar kelas & kamar jarang berubah; id dienkripsi setelah diambil dari cache
+            $queryKelas = Cache::remember('kelaskamar.kelas', 600, fn () => DB::table('ref_kelas')
             ->select('ref_kelas.employee_id', 'employee_new.nama AS nama_guru', 'ref_kelas.id AS id_kelas', 'ref_kelas.name')
             ->leftJoin('employee_new', 'ref_kelas.employee_id','=','employee_new.id')
-            ->get()
+            ->get())
             ->map(function ($kelas) {
+                $kelas = clone $kelas;
                 $kelas->id_kelas = $this->encryptId($kelas->id_kelas);
                 return $kelas;
             });
 
-            $queryKamar = DB::table('ref_kamar')
+            $queryKamar = Cache::remember('kelaskamar.kamar', 600, fn () => DB::table('ref_kamar')
             ->select(
                 'ref_kamar.*',
                 'employee_new.nama AS guru_murroby'
             )
             ->orderByRaw("CAST(SUBSTRING_INDEX(code, 'a', 1) AS UNSIGNED) ASC, code ASC")
             ->leftJoin('employee_new', 'ref_kamar.employee_id', '=', 'employee_new.id')
-            ->get()
+            ->get())
             ->map(function ($kamar) {
+                $kamar = clone $kamar;
                 $kamar->id = $this->encryptId($kamar->id);
                 return $kamar;
             });

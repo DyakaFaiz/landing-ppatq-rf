@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
 class HomePageController extends Controller
 {
-    
+    // Data yang jarang berubah disimpan sementara agar tidak bolak-balik ke database (tiap query ~40 ms)
+    private const CACHE_TTL = 600;
+
     public function index()
     {
         try {
@@ -15,9 +18,9 @@ class HomePageController extends Controller
                 ->select('id', 'judul', 'created_at', 'thumbnail', 'isi_berita')
                 ->whereNull('deleted_at')
                 ->orderBy('created_at', 'desc')
-                ->paginate(3)
-                ->withQueryString()
-                ->through(function ($item) {
+                ->limit(3)
+                ->get()
+                ->map(function ($item) {
                     $item->id = Crypt::encryptString($item->id . "ppatq");
                     return $item;
                 });
@@ -31,40 +34,49 @@ class HomePageController extends Controller
                 ->limit(5)
                 ->get();
 
-                $jumlahSantri = DB::table('santri_detail')
-                ->where('status', 0)
-                ->whereIn('jenis_kelamin', ['L', 'P'])
-                ->selectRaw('jenis_kelamin, COUNT(*) AS jumlah')
-                ->groupBy('jenis_kelamin')
-                ->pluck('jumlah', 'jenis_kelamin');
+                $statistik = Cache::remember('home.statistik', self::CACHE_TTL, function () {
+                    $jumlahSantri = DB::table('santri_detail')
+                    ->where('status', 0)
+                    ->whereIn('jenis_kelamin', ['L', 'P'])
+                    ->selectRaw('jenis_kelamin, COUNT(*) AS jumlah')
+                    ->groupBy('jenis_kelamin')
+                    ->pluck('jumlah', 'jenis_kelamin');
 
-                $data['jumlahSiswaLaki'] = $jumlahSantri['L'] ?? 0;
-                $data['jumlahSiswaPerempuan'] = $jumlahSantri['P'] ?? 0;
+                    $jumlahGuru = DB::table('tb_guru')
+                    ->whereIn('jabatan_new', ['murobby', 'ustadz', 'tahfidz'])
+                    ->selectRaw("SUM(jabatan_new = 'murobby') AS murroby, COUNT(*) AS guru")
+                    ->first();
 
-                $jumlahGuru = DB::table('tb_guru')
-                ->whereIn('jabatan_new', ['murobby', 'ustadz', 'tahfidz'])
-                ->selectRaw("SUM(jabatan_new = 'murobby') AS murroby, COUNT(*) AS guru")
-                ->first();
+                    return [
+                        'laki'      => $jumlahSantri['L'] ?? 0,
+                        'perempuan' => $jumlahSantri['P'] ?? 0,
+                        'murroby'   => (int) $jumlahGuru->murroby,
+                        'guru'      => (int) $jumlahGuru->guru,
+                    ];
+                });
 
-                $data['jumlahMurroby'] = (int) $jumlahGuru->murroby;
-                $data['jumlahGuru'] = (int) $jumlahGuru->guru;
+                $data['jumlahSiswaLaki'] = $statistik['laki'];
+                $data['jumlahSiswaPerempuan'] = $statistik['perempuan'];
+                $data['jumlahMurroby'] = $statistik['murroby'];
+                $data['jumlahGuru'] = $statistik['guru'];
 
-                $data['fasilitas'] = DB::table('fasilitas')
+                $data['fasilitas'] = Cache::remember('home.fasilitas', self::CACHE_TTL, fn () => DB::table('fasilitas')
                 ->select('nama', 'foto')
                 ->where('published', 1)
-                ->get();
+                ->get());
 
-                $data['galeri'] = DB::table('galeri')
+                $data['galeri'] = Cache::remember('home.galeri', self::CACHE_TTL, fn () => DB::table('galeri')
                 ->select('nama', 'foto')
                 ->where('published', 1)
-                ->get();
+                ->get());
 
-                $data['dakwah'] = DB::table('dakwah')
+                $data['dakwah'] = Cache::remember('home.dakwah', self::CACHE_TTL, fn () => DB::table('dakwah')
                     ->select('id', 'judul', 'isi_dakwah')
                     ->whereNull('deleted_at')
                     ->limit(4)
-                    ->get()
+                    ->get())
                     ->map(function ($item) {
+                        $item = clone $item;
                         $item->idEnkripsi = Crypt::encryptString($item->id . "ppatq");
                         return $item;
                     });
@@ -76,46 +88,35 @@ class HomePageController extends Controller
     }
     
     public function getSantriRandom(){
-        $query = DB::table('santri_detail')
+        // Satu query untuk beberapa kandidat acak; tabelnya kecil jadi RAND() murah, yang mahal adalah round-trip
+        $kandidat = DB::table('santri_detail')
             ->select('nama', 'photo', 'kelas')
             ->whereNotNull('photo')
-            ->where('photo', '!=', '');
+            ->where('photo', '!=', '')
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
 
-        // Foto dicek langsung ke server manajemen, jadi dibatasi beberapa percobaan saja
-        $santri = null;
-        for ($i = 0; $i < 5; $i++) {
-            $santri = $this->randomRow(clone $query);
-            if (!$santri) {
-                break;
-            }
-
-            if ($this->photoExists('https://manajemen.ppatq-rf.id/assets/img/upload/photo/' . $santri->photo)) {
-                break;
-            }
-        }
+        // Foto dicek langsung ke server manajemen, ambil kandidat pertama yang fotonya ada
+        $santri = $kandidat->first(fn ($row) => $this->photoExists('https://manajemen.ppatq-rf.id/assets/img/upload/photo/' . $row->photo))
+            ?? $kandidat->first();
 
         return response()->json($santri);
     }
 
     public function getPegawaiRandom(){
-        $pegawai = $this->randomRow(
-            DB::table('employee_new')->select('nama', 'jabatan', 'photo')
-        );
+        $query = DB::table('employee_new')->select('nama', 'jabatan', 'photo');
+        $total = Cache::remember('random.pegawai.total', self::CACHE_TTL, fn () => (clone $query)->count());
 
-        return response()->json($pegawai);
+        return response()->json($total > 0 ? $this->rowAt($query, random_int(0, $total - 1)) : null);
     }
 
     /**
-     * Ambil satu baris acak lewat count + offset, tanpa ORDER BY RAND() yang mengurutkan seluruh tabel.
+     * Ambil satu baris pada urutan ke-$offset, tanpa ORDER BY RAND() yang mengurutkan seluruh tabel.
      */
-    private function randomRow($query)
+    private function rowAt($query, int $offset)
     {
-        $total = (clone $query)->count();
-        if ($total === 0) {
-            return null;
-        }
-
-        return $query->offset(random_int(0, $total - 1))->limit(1)->first();
+        return $query->offset($offset)->limit(1)->first();
     }
 
     private function photoExists(string $url): bool
@@ -127,9 +128,9 @@ class HomePageController extends Controller
     }
     
     public function About(){
-        $data['about'] = DB::table('about')
+        $data['about'] = Cache::remember('about', self::CACHE_TTL, fn () => DB::table('about')
         ->select('about.*')
-        ->first();
+        ->first());
 
         return view('About.index', $data);
     }
