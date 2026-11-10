@@ -27,6 +27,11 @@
         break-inside: avoid;
         margin-bottom: 1rem;
     }
+    /* Foto galeri tampil dengan rasio aslinya (tidak dipotong); tinggi sementara saat belum termuat */
+    .galeri-masonry .foto-galeri img {
+        height: auto;
+        min-height: 120px;
+    }
     .foto-fasilitas img {
         aspect-ratio: 4 / 3;
     }
@@ -51,8 +56,6 @@
         $urlGaleri = 'https://manajemen.ppatq-rf.id/assets/img/upload/foto_galeri/';
         $urlFasilitas = 'https://manajemen.ppatq-rf.id/assets/img/upload/foto_fasilitas/';
         $fotoKosong = asset('img/auth-cover-login-mask-light.png');
-        // Rasio foto galeri diacak per foto (berdasarkan nama file, supaya tidak berubah tiap refresh)
-        $rasioGaleri = ['1 / 1', '3 / 4', '4 / 3', '4 / 5', '16 / 10', '2 / 3'];
     @endphp
     <div class="container py-4 wow fadeInUp" data-wow-delay="0.1s">
         <div class="row g-5">
@@ -66,7 +69,6 @@
                         @foreach ($galeri as $row)
                             <a href="{{ $urlGaleri . $row->foto }}" class="foto-seamless foto-galeri popup-btn d-block" title="{{ $row->nama }}">
                                 <img loading="lazy" src="{{ $urlGaleri . $row->foto }}" alt="{{ $row->nama }}"
-                                    style="aspect-ratio: {{ $rasioGaleri[crc32($row->foto) % count($rasioGaleri)] }};"
                                     onerror="this.onerror=null; this.src='{{ $fotoKosong }}';">
                             </a>
                         @endforeach
