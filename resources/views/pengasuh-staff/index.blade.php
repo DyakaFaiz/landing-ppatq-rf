@@ -46,21 +46,6 @@
             color: #1a5632;
             font-weight: 800;
         }
-        .btn-seamless {
-            background: linear-gradient(135deg, #198754, #20c997);
-            color: #fff;
-            border: 0;
-            border-radius: 16px;
-            padding: 10px 24px;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 10px 20px rgba(32, 201, 151, 0.2);
-        }
-        .btn-seamless:hover {
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 15px 25px rgba(32, 201, 151, 0.3);
-        }
     </style>
 @endsection
 

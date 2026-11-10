@@ -131,6 +131,12 @@
 <div class="div">
     <iframe loading="lazy" src="https://www.youtube.com/embed/i362ZGnlCQs?si=A1ogGaLnHYI1puw8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="true" class="video-hero w-100"></iframe>
 </div>
+<div class="container pt-5 text-center wow fadeInUp" data-wow-delay="0.1s">
+    <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
+        <h2 class="fw-bold text-green text-uppercase">Bergabung Bersama Kami</h2>
+    </div>
+    <a class="btn-seamless" href="https://psb.ppatq-rf.id/" target="_blank" rel="noopener">DAFTAR <i class="bi bi-arrow-right ms-1"></i></a>
+</div>
 @php
     use Carbon\Carbon;
     Carbon::setLocale('id');

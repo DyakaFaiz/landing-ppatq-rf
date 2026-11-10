@@ -85,6 +85,9 @@
                 <li class="nav-item" id="layanan">
                     <a class="nav-link" href="{{Route('layanan')}}">Layanan</a>
                 </li>
+                <li class="nav-item nav-daftar">
+                    <a class="nav-link" href="https://psb.ppatq-rf.id/" target="_blank" rel="noopener">Daftar</a>
+                </li>
             </ul>
         </div>
     </nav>
