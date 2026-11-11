@@ -898,6 +898,64 @@ img.zoomable {
     border-bottom: 1px dashed #d1e2d7;
 }
 
+/********** Ajakan (CTA) beranda **********/
+.cta-kartu {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 100%;
+    padding: 16px 20px;
+    border: 2px solid #d1e2d7;
+    border-radius: 20px;
+    color: #1a5632;
+    text-decoration: none;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.cta-kartu:hover {
+    color: #1a5632;
+    border-color: #20c997;
+    transform: translateY(-3px);
+}
+.cta-kartu .cta-ikon {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f8fcf9 0%, #e8f5ed 100%);
+    color: #198754;
+    font-size: 1.5rem;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+.cta-kartu:hover .cta-ikon {
+    background: linear-gradient(135deg, #198754, #20c997);
+    color: #fff;
+}
+.cta-kartu .cta-isi {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.cta-kartu .cta-isi strong {
+    display: block;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.25;
+}
+.cta-kartu .cta-isi small {
+    color: #5c8c6d;
+}
+.cta-kartu .cta-panah {
+    flex: 0 0 auto;
+    color: #20c997;
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+.cta-kartu:hover .cta-panah {
+    transform: translateX(4px);
+}
+
 /********** Fasilitas, kebutuhan santri baru & buku laporan **********/
 .fasilitas-item {
     display: flex;

@@ -108,21 +108,6 @@
         color: #1a5632;
     }
 
-    .bg-yellow-soft {
-        background-color: #fff3cd; /* Bootstrap alert-warning background */
-        color: #856404; /* Sesuai teks pada alert warning */
-    }
-
-    .blink {
-        animation: blink 0.6s infinite;
-    }
-
-    @keyframes blink {
-        0%   { opacity: 1; }
-        50%  { opacity: 0; }
-        100% { opacity: 1; }
-    }
-
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 @endsection
@@ -131,11 +116,29 @@
 <div class="div">
     <iframe loading="lazy" src="https://www.youtube.com/embed/i362ZGnlCQs?si=A1ogGaLnHYI1puw8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="true" class="video-hero w-100"></iframe>
 </div>
-<div class="container pt-5 text-center wow fadeInUp" data-wow-delay="0.1s">
-    <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-        <h2 class="fw-bold text-green text-uppercase">Bergabung Bersama Kami</h2>
+<div class="container pt-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="row g-3">
+        <div class="col-12 col-md-6">
+            <a class="cta-kartu" href="https://psb.ppatq-rf.id/" target="_blank" rel="noopener">
+                <span class="cta-ikon"><i class="bi bi-person-add"></i></span>
+                <span class="cta-isi">
+                    <strong>Bergabung Bersama Kami</strong>
+                    <small>Daftar santri baru PPATQ Raudlatul Falah</small>
+                </span>
+                <i class="bi bi-arrow-right cta-panah"></i>
+            </a>
+        </div>
+        <div class="col-12 col-md-6">
+            <a class="cta-kartu" href="{{ route('app-wali-santri') }}" target="_blank" rel="noopener">
+                <span class="cta-ikon"><i class="bi bi-phone"></i></span>
+                <span class="cta-isi">
+                    <strong>Aplikasi Mobile Wali Santri</strong>
+                    <small>Pantau santri langsung dari ponsel</small>
+                </span>
+                <i class="bi bi-arrow-right cta-panah"></i>
+            </a>
+        </div>
     </div>
-    <a class="btn-seamless" href="https://psb.ppatq-rf.id/" target="_blank" rel="noopener">DAFTAR <i class="bi bi-arrow-right ms-1"></i></a>
 </div>
 @php
     use Carbon\Carbon;
@@ -143,14 +146,6 @@
 @endphp
 <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
     <div class="container w-100">
-        <div class="row text-center">
-            <h6 class="py-2 bg-yellow-soft rounded">
-                Dapatkan Aplikasi Mobile Wali Santri 
-                <a class="fst-italic fs-5 fw-semibold text-decoration-underline text-dark blink" target="_blank" href="{{ route('app-wali-santri') }}">
-                    Disini!!!
-                </a>
-            </h6>
-        </div>
         <div class="row mb-3">
             <div class="col-12 col-sm-9">
                 <div class="row">

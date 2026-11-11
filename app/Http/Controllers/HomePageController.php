@@ -63,12 +63,12 @@ class HomePageController extends Controller
                 $data['fasilitas'] = Cache::remember('home.fasilitas', self::CACHE_TTL, fn () => DB::table('fasilitas')
                 ->select('nama', 'foto')
                 ->where('published', 1)
-                ->get());
+                ->get())->shuffle();
 
                 $data['galeri'] = Cache::remember('home.galeri', self::CACHE_TTL, fn () => DB::table('galeri')
                 ->select('nama', 'foto')
                 ->where('published', 1)
-                ->get());
+                ->get())->shuffle();
 
                 $data['dakwah'] = Cache::remember('home.dakwah', self::CACHE_TTL, fn () => DB::table('dakwah')
                     ->select('id', 'judul', 'isi_dakwah')
