@@ -35,6 +35,20 @@ class AgendaController extends Controller
 
 
     private const CACHE_TTL = 300;
+
+    /**
+     * Buang sisa editor Quill yang ikut tersimpan di HTML agenda: tooltip berisi <input>, area clipboard, dan
+     * atribut contenteditable pada pembungkus isi (membuat teks bisa diketik oleh pengunjung).
+     */
+    private function bersihkanQuill(?string $html): string
+    {
+        $html = preg_replace('~<div class="ql-(?:tooltip|clipboard)\b[^"]*"[^>]*>.*?</div>~s', '', (string) $html);
+
+        $html = preg_replace('~<input\b[^>]*>~i', '', $html);
+
+        // Atribut yang membuat konten bisa diedit atau dipasangi perilaku editor
+        return preg_replace('~\s+(?:contenteditable|data-gramm|data-placeholder|tabindex)="[^"]*"~i', '', $html);
+    }
     private const PER_HALAMAN = 6;
 
     public function index(){
@@ -47,7 +61,7 @@ class AgendaController extends Controller
         // Halaman di luar jangkauan: 404, bukan halaman kosong yang bisa diindeks
         abort_if($halaman > max(1, (int) ceil($total / self::PER_HALAMAN)), 404);
 
-        $item = Cache::remember("agenda.halaman.$halaman", self::CACHE_TTL, function () use ($halaman) {
+        $item = Cache::remember("agenda.v3.halaman.$halaman", self::CACHE_TTL, function () use ($halaman) {
             $agenda = DB::table('agenda')
                 ->select('id', 'judul', 'isi', 'tanggal_mulai', 'tanggal_selesai', 'gambar', 'created_at')
                 ->whereNull('deleted_at')
@@ -57,6 +71,7 @@ class AgendaController extends Controller
 
             // Untuk setiap record agenda, tambahkan properti baru berisi teks dari tag <p>
             foreach ($agenda as $agendaItem) {
+                $agendaItem->isi = $this->bersihkanQuill($agendaItem->isi);
                 $agendaItem->isi_paragraph = $this->extractParagraphHTML($agendaItem->isi);
             }
 
