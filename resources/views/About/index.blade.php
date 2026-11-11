@@ -73,7 +73,7 @@
     </div>
     <div class="col-lg-6 p-5">
         <div class="text-center">
-            <img src="{{asset('img/abah-sohib.png')}}" class="img-fluid mb-4" style="max-width: 200px;">
+            <img loading="lazy" src="{{asset('img/abah-sohib2.jpeg')}}" class="rounded-circle img-fluid mb-4" style="max-width: 200px;" alt="foto Pengasuh">
             <h5 class="mb-3">SAMBUTAN PENGASUH PONDOK PESANTREN
                 ANAK-ANAK TAHFIDZUL QUR’AN
                 RAUDLATUL FALAH</h5>
@@ -101,6 +101,8 @@
     </div>
 </div>
 @include('metode.content')
+@include('jadwal.content')
+@include('laporan.content')
 <div class="container py-4">
     <div class="row g-5">
         <div class="col-lg-6">

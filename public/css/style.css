@@ -844,6 +844,60 @@ img.zoomable {
     background: rgba(255, 255, 255, 0.2);
 }
 
+/********** Jadwal kegiatan **********/
+.bg-yellow-soft {
+    background-color: #fff3cd;
+    color: #856404;
+}
+.jadwal-catatan {
+    color: #5c8c6d;
+    font-size: 0.9rem;
+}
+.jadwal-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #d1e2d7;
+}
+.jadwal-row:last-child {
+    border-bottom: 0;
+}
+.jadwal-jam {
+    flex: 0 0 130px;
+    text-align: center;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+.jadwal-ikon {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f8fcf9 0%, #e8f5ed 100%);
+    color: #198754;
+}
+.jadwal-ibadah,
+.jadwal-tahfidz { color: #198754; }
+.jadwal-sekolah { color: #3b5bdb; }
+.jadwal-istirahat { color: #d98e04; }
+.jadwal-tidur { color: #4a6fa5; }
+.jadwal-bersih { color: #20c997; }
+.jadwal-belajar { color: #7048b8; }
+.jadwal-kegiatan {
+    flex: 1 1 200px;
+    color: #1a5632;
+    font-weight: 600;
+}
+.jadwal-mingguan {
+    padding: 16px 0;
+    border-bottom: 1px dashed #d1e2d7;
+}
+
 /********** Fasilitas, kebutuhan santri baru & buku laporan **********/
 .fasilitas-item {
     display: flex;
