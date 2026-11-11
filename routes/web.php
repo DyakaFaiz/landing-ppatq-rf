@@ -25,7 +25,7 @@ Route::get('/galeri-fasilitas', $controller_path .'\GaleriFasilitasController@in
 Route::get('/berita', $controller_path .'\BeritaController@index')->name('berita');
 
 Route::get('/agenda', $controller_path .'\AgendaController@index')->name('agenda');
-Route::get('/berita/{id_berita}', $controller_path .'\BeritaController@detail')->name('berita.detail');
+Route::get('/berita/{slug}', $controller_path .'\BeritaController@detail')->name('berita.detail');
 
 Route::get('/dakwah/{idDakwah}', $controller_path .'\DakwahController@detail')->name('dakwah.detail');
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\SlugBerita;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
@@ -15,15 +16,15 @@ class HomePageController extends Controller
     {
         try {
                 // Berita & agenda: cache pendek supaya kabar baru cepat muncul
-                $data['beritas'] = Cache::remember('home.berita', 300, fn () => DB::table('berita')
-                ->select('id', 'judul', 'created_at', 'thumbnail', 'isi_berita')
+                $data['beritas'] = Cache::remember('home.berita.v2', 300, fn () => DB::table('berita')
+                ->select('id', 'judul', 'slug', 'created_at', 'thumbnail', 'isi_berita', SlugBerita::urutan())
                 ->whereNull('deleted_at')
                 ->orderBy('created_at', 'desc')
                 ->limit(3)
                 ->get())
                 ->map(function ($item) {
                     $item = clone $item;
-                    $item->id = Crypt::encryptString($item->id . "ppatq");
+                    $item->slug_publik = SlugBerita::publik($item);
                     return $item;
                 });
 

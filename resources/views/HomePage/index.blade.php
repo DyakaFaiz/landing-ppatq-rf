@@ -170,7 +170,7 @@
                                             ? $berita->thumbnail
                                             : 'https://manajemen.ppatq-rf.id/assets/img/upload/berita/thumbnail/' . $berita->thumbnail;
                                     @endphp
-                                    <a class="text-decoration-none text-dark" href="{{ route('berita.detail', ['id_berita' => $berita->id]) }}">
+                                    <a class="text-decoration-none text-dark" href="{{ route('berita.detail', ['slug' => $berita->slug_publik]) }}">
                                         <img loading="lazy" class="img-fluid rounded" src="{{ $url }}" alt="Gambar Berita"
                                             onerror="this.onerror=null; this.src='{{ asset('img/auth-cover-login-mask-light.png') }}';">
                                     </a>
@@ -183,9 +183,9 @@
                                             {{ \Carbon\Carbon::parse($berita->created_at)->diffForHumans(now(), false, false, 2) }}
                                         </small>
                                     </div>
-                                    <h4 class="mb-3"><a class="text-decoration-none text-dark" href="{{ route('berita.detail', ['id_berita' => $berita->id]) }}">{{$berita->judul}}</a></h4>
+                                    <h4 class="mb-3"><a class="text-decoration-none text-dark" href="{{ route('berita.detail', ['slug' => $berita->slug_publik]) }}">{{$berita->judul}}</a></h4>
                                     <p class="mb-0">{{ Str::limit(strip_tags($berita->isi_berita),150) }}</p>
-                                    <a class="text-green" href="{{ route('berita.detail', ['id_berita' => $berita->id]) }}">Baca Selengkapnya <i class="bi bi-arrow-right"></i></a>
+                                    <a class="text-green" href="{{ route('berita.detail', ['slug' => $berita->slug_publik]) }}">Baca Selengkapnya <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -329,7 +329,7 @@
                     <div class="row">
                         @foreach ($dakwah as $row)
                             <div class="col-12 col-sm-3 mt-2">
-                                {{-- <h4 class="mb-3"><a class="text-decoration-none text-dark" href="{{ route('berita.detail', ['id_berita' => $berita->id]) }}">{{$berita->judul}}</a></h4> --}}
+                                {{-- <h4 class="mb-3"><a class="text-decoration-none text-dark" href="{{ route('berita.detail', ['slug' => $berita->slug_publik]) }}">{{$berita->judul}}</a></h4> --}}
                                 {{-- <h5 class="mb-1"><a class="text-decoration-none text-dark" href="#">{{$row->judul}}</a></h5> --}}
                                 <a href="{{ route('dakwah.detail', ['idDakwah' => $row->idEnkripsi]) }}" class="text-decoration-none"><p class="mb-0 py-2 text-body"><span class="fw-bolder fs-6 text-dark">{{$row->judul}}: </span>{{ Str::limit(strip_tags($row->isi_dakwah),150) }}</p></a>
                             </div>
