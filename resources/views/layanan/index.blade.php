@@ -75,7 +75,7 @@
                                             <div class="ico bi bi-person-add highlight text-success"></div>
                                             <div class="text-block">
                                                 <div class="name">PSB</div>
-                                                <div class="text text-justify">Pendaftaran dan seleksi calon santri baru, mulai dari administrasi, tes akademik, hingga wawancara. <a class="fs-6 fw-bold fst-italic" href="https://psb.ppatq-rf.id/">Disini</a></div>
+                                                <div class="text text-justify">Pendaftaran dan seleksi calon santri baru, mulai dari administrasi, tes akademik, hingga wawancara. klik <a class="fs-6 fw-bold fst-italic" href="https://psb.ppatq-rf.id/">Disini</a></div>
                                             </div>
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@
                                             <div class="ico bi bi-wallet-fill highlight text-success"></div>
                                             <div class="text-block">
                                                 <div class="name">Payment</div>
-                                                <div class="text text-justify">Pembayaran biaya pendidikan, asrama, dan administrasi dengan mudah dan aman lewat berbagai metode pembayaran. <a class="fs-6 fw-bold fst-italic" href="https://payment.ppatq-rf.id/">Disini</a></div>
+                                                <div class="text text-justify">Pembayaran biaya pendidikan, asrama, dan administrasi dengan mudah dan aman lewat berbagai metode pembayaran. Sekaligus kontrol uang saku santri. Klik <a class="fs-6 fw-bold fst-italic" href="https://play.google.com/store/apps/details?id=id.co.solusinegeri.pspEdmedia&pcampaignid=web_share">Disini</a></div>
                                             </div>
                                         </div>
                                     </div>
@@ -94,6 +94,15 @@
                                             <div class="text-block">
                                                 <div class="name">Sambung Rasa</div>
                                                 <div class="text text-justify">Layanan komunikasi dan konsultasi bagi wali santri untuk menyampaikan aspirasi atau menanyakan perkembangan santri. <a class="fs-6 fw-bold fst-italic" href="https://payment.ppatq-rf.id/index.php/keluhan">Disini</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4 col-md-4">
+                                        <div class="service-block" style="visibility: visible;">
+                                            <div class="ico bi bi-phone highlight text-success"></div>
+                                            <div class="text-block">
+                                                <div class="name">Mobile PPATQ</div>
+                                                <div class="text text-justify">Layanan informasi seputar santri, mulai dari akademik, ketahfidzan, kesehatan, dan lainnya, serta seputar pondok pesantren. Klik <a class="fs-6 fw-bold fst-italic" href="https://play.google.com/store/apps/details?id=com.ppatq.walsan&pcampaignid=web_share">Disini</a></div>
                                             </div>
                                         </div>
                                     </div>
