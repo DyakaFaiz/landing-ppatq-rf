@@ -19,13 +19,6 @@
         border-radius: 24px;
         background: linear-gradient(135deg, #f8fcf9 0%, #e8f5ed 100%);
     }
-    /* Tanpa foto: avatar inisial kecil, bukan gambar penuh */
-    .prestasi-img.prestasi-img-kecil {
-        width: 72px;
-        height: 72px;
-        aspect-ratio: 1 / 1;
-        border-radius: 20px;
-    }
     .prestasi-title {
         color: #1a5632;
         font-weight: 800;
@@ -68,17 +61,19 @@
             <div class="row g-4">
                 @forelse ($prestasi as $row)
                     @php
-                        $adaFoto = !empty($row->foto);
-                        $fallback = 'https://ui-avatars.com/api/?size=160&name=' . urlencode($row->namaSantri ?? $row->prestasi_text);
-                        $foto = $adaFoto
-                            ? 'https://manajemen.ppatq-rf.id/assets/img/upload/foto_fasilitas/' . $row->foto
-                            : $fallback;
+                        $defaultFoto = $defaultImage ?? asset('img/default-prestasi.svg');
+                        $foto = $row->gambar_url ?? (
+                            !empty($row->foto)
+                                ? 'https://manajemen.ppatq-rf.id/assets/img/upload/foto_prestasi/' . $row->foto
+                                : $defaultFoto
+                        );
                     @endphp
                     <div class="col-12 col-sm-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
                         <div class="prestasi-card h-100 d-flex flex-column">
-                            <img class="prestasi-img {{ $adaFoto ? '' : 'prestasi-img-kecil' }}" loading="lazy" src="{{ $foto }}"
-                                alt="Foto prestasi {{ $row->namaSantri }}"
-                                onerror="this.onerror=null; this.src='{{ $fallback }}'; this.classList.add('prestasi-img-kecil');">
+                            <img class="prestasi-img" loading="lazy" src="{{ $foto }}"
+                                alt="Foto prestasi {{ $row->namaSantri ?? $row->prestasi_text }}"
+                                @if(!empty($row->is_default_gambar)) data-no-zoom @endif
+                                onerror="this.onerror=null; this.src='{{ $defaultFoto }}'; this.setAttribute('data-no-zoom', '');">
                             <div class="d-flex flex-column flex-grow-1 px-2 pt-3">
                                 <h5 class="prestasi-title mb-3">{{ $row->prestasi_text }}</h5>
                                 <div class="d-flex flex-wrap gap-2 mb-3">

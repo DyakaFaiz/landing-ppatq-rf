@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Default Foto Prestasi PPATQ">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4f9f5"/>
+      <stop offset="50%" stop-color="#e6f4ea"/>
+      <stop offset="100%" stop-color="#d3ebd9"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fcd34d"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="cupGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0f3d24" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad)"/>
+  <circle cx="400" cy="240" r="220" fill="url(#glow)"/>
+
+  <!-- Decorative geometric border -->
+  <rect x="24" y="24" width="752" height="552" rx="20" fill="none" stroke="#20c997" stroke-width="2" stroke-dasharray="8 8" opacity="0.35"/>
+
+  <!-- Laurel Wreath Left -->
+  <g fill="url(#leafGrad)" opacity="0.85">
+    <path d="M300 290 C 270 270 255 230 260 190 C 265 215 280 240 305 255 Z"/>
+    <path d="M285 240 C 255 220 245 180 255 140 C 262 165 278 190 300 205 Z"/>
+    <path d="M290 185 C 268 162 265 125 280 90 C 285 115 298 138 318 150 Z"/>
+    <path d="M320 140 C 302 115 308 78 330 50 C 332 75 342 98 358 110 Z"/>
+    <path d="M360 105 C 348 80 360 48 385 28 C 384 52 390 74 402 85 Z"/>
+  </g>
+
+  <!-- Laurel Wreath Right -->
+  <g fill="url(#leafGrad)" opacity="0.85" transform="translate(800, 0) scale(-1, 1)">
+    <path d="M300 290 C 270 270 255 230 260 190 C 265 215 280 240 305 255 Z"/>
+    <path d="M285 240 C 255 220 245 180 255 140 C 262 165 278 190 300 205 Z"/>
+    <path d="M290 185 C 268 162 265 125 280 90 C 285 115 298 138 318 150 Z"/>
+    <path d="M320 140 C 302 115 308 78 330 50 C 332 75 342 98 358 110 Z"/>
+    <path d="M360 105 C 348 80 360 48 385 28 C 384 52 390 74 402 85 Z"/>
+  </g>
+
+  <!-- Trophy Illustration -->
+  <g filter="url(#shadow)">
+    <!-- Base -->
+    <path d="M340 375 L460 375 L475 405 L325 405 Z" fill="#b45309"/>
+    <rect x="330" y="355" width="140" height="20" rx="4" fill="url(#goldGrad)"/>
+
+    <!-- Stem -->
+    <path d="M380 300 L420 300 L415 355 L385 355 Z" fill="url(#goldGrad)"/>
+    <ellipse cx="400" cy="300" rx="25" ry="8" fill="#d97706"/>
+
+    <!-- Cup Handles -->
+    <path d="M320 180 C 275 185 270 255 330 265 L335 250 C 290 242 295 198 330 195 Z" fill="url(#goldGrad)"/>
+    <path d="M480 180 C 525 185 530 255 470 265 L465 250 C 510 242 505 198 470 195 Z" fill="url(#goldGrad)"/>
+
+    <!-- Cup Body -->
+    <path d="M320 160 C 320 280 370 300 400 300 C 430 300 480 280 480 160 Z" fill="url(#cupGrad)"/>
+    <ellipse cx="400" cy="160" rx="80" ry="16" fill="#fde68a"/>
+    <ellipse cx="400" cy="160" rx="72" ry="12" fill="#f59e0b"/>
+
+    <!-- Star on Trophy -->
+    <polygon points="400,195 407,215 428,215 411,228 417,248 400,236 383,248 389,228 372,215 393,215" fill="#ffffff" opacity="0.95"/>
+
+    <!-- Stars above Trophy -->
+    <!-- Center star -->
+    <polygon points="400,90 406,106 423,106 409,116 414,132 400,122 386,132 391,116 377,106 394,106" fill="url(#goldGrad)"/>
+    <!-- Left star -->
+    <polygon points="350,110 354,122 367,122 356,130 360,142 350,134 340,142 344,130 333,122 346,122" fill="url(#goldGrad)" opacity="0.85"/>
+    <!-- Right star -->
+    <polygon points="450,110 454,122 467,122 456,130 460,142 450,134 440,142 444,130 433,122 446,122" fill="url(#goldGrad)" opacity="0.85"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="400" y="470" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="28" font-weight="800" fill="#1a5632" text-anchor="middle" letter-spacing="4">PRESTASI SANTRI</text>
+  <text x="400" y="505" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#5c8c6d" text-anchor="middle" letter-spacing="2">PPATQ RAUDLATUL FALAH</text>
+</svg>
+

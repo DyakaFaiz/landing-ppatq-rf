@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class PrestasiController extends Controller
 {
@@ -48,12 +49,44 @@ class PrestasiController extends Controller
             'internasional' => 'Internasional'
         ];
 
-        $data["prestasi"]->transform(function ($item) use ($jenisOptions, $prestasiOptions, $tingkatOptions) {
+        $baseUrl = 'https://manajemen.ppatq-rf.id/assets/img/upload/foto_prestasi/';
+        $defaultImage = asset('img/default-prestasi.svg');
+
+        $data["prestasi"]->transform(function ($item) use ($jenisOptions, $prestasiOptions, $tingkatOptions, $baseUrl, $defaultImage) {
             $item->jenis_text = $jenisOptions[$item->jenis] ?? $item->jenis;
             $item->prestasi_text = $prestasiOptions[$item->prestasi] ?? $item->prestasi;
             $item->tingkat_text = $tingkatOptions[$item->tingkat] ?? $item->tingkat;
+
+            // Pengecekan ketersediaan gambar dari database dan remote server
+            if (!empty($item->foto)) {
+                $fotoUrl = $baseUrl . $item->foto;
+                $exists = Cache::remember('prestasi.foto.' . md5($item->foto), 3600, function () use ($fotoUrl) {
+                    try {
+                        $response = Http::timeout(2)
+                            ->withOptions(['allow_redirects' => false])
+                            ->head($fotoUrl);
+                        return $response->status() === 200;
+                    } catch (\Throwable $e) {
+                        return false;
+                    }
+                });
+
+                if ($exists) {
+                    $item->gambar_url = $fotoUrl;
+                    $item->is_default_gambar = false;
+                } else {
+                    $item->gambar_url = $defaultImage;
+                    $item->is_default_gambar = true;
+                }
+            } else {
+                $item->gambar_url = $defaultImage;
+                $item->is_default_gambar = true;
+            }
+
             return $item;
         });
+
+        $data['defaultImage'] = $defaultImage;
 
         return view("prestasi.index",  $data);
     }
