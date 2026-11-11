@@ -4,7 +4,7 @@
         <div class="row g-5">
             <div class="col-lg-6">
                 <div class="section-title position-relative pb-3 mb-5">
-                    <h2 class="fw-bold text-green  text-uppercase">Tentang Pesantren</h2>
+                    <h1 class="h2 fw-bold text-green  text-uppercase">Tentang Pesantren</h1>
                     <small>
                         PPATQ RAUDLATUL FALAH - PATI
                     </small>

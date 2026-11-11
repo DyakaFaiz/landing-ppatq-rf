@@ -2,6 +2,29 @@
 @section('title')
 <title>{{ $data->judul }} | PPATQ-RF</title>
 @endsection
+@php
+    $ringkasDakwah = Str::limit(trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags($data->isi_dakwah), ENT_QUOTES))), 155);
+@endphp
+@section('description', $ringkasDakwah)
+@section('og_type', 'article')
+@section('jsonld')
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'Article',
+    'headline' => Str::limit($data->judul, 110, ''),
+    'description' => $ringkasDakwah,
+    'datePublished' => \Carbon\Carbon::parse($data->created_at)->toIso8601String(),
+    'author' => ['@type' => 'Organization', 'name' => 'PPATQ Raudlatul Falah'],
+    'publisher' => [
+        '@type' => 'Organization',
+        'name' => 'PPATQ Raudlatul Falah',
+        'logo' => ['@type' => 'ImageObject', 'url' => asset('img/cropped-header-objectpatq.png')],
+    ],
+    'mainEntityOfPage' => url()->current(),
+], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) !!}
+</script>
+@endsection
 
 
 @section('header')

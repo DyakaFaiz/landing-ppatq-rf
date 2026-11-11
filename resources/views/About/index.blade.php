@@ -2,6 +2,7 @@
 @section('title')
 <title>Tentang Pesantren | PPATQ-RF</title>
 @endsection
+@section('description', "Profil PPATQ Raudlatul Falah: visi dan misi, sambutan pengasuh, metode hafalan Al-Qur'an, jadwal kegiatan harian santri, dan lokasi pondok pesantren di Gembong, Pati.")
 
 @section('content')
 @include('About.content')

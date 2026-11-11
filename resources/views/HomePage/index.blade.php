@@ -1,6 +1,6 @@
 @extends('layout.main_layout')
 @section('title')
-<title>Beranda | PPATQ-RF</title>
+<title>PPATQ Raudlatul Falah | Pondok Pesantren Anak Tahfidzul Qur'an Pati</title>
 @endsection
 
 @section('header')

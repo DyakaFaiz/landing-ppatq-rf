@@ -2,6 +2,7 @@
 @section('title')
 <title>Agenda | PPATQ-RF</title>
 @endsection
+@section('description', "Agenda dan jadwal kegiatan PPATQ Raudlatul Falah, pondok pesantren anak-anak tahfidzul Qur'an di Pati.")
 @section('header')
 <style>
     .agenda-card {
@@ -43,7 +44,7 @@
     <div class="container-fluid py-4 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container w-100">
             <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-                <h2 class="fw-bold text-green text-uppercase text-green">Agenda PPATQ</h2>
+                <h1 class="h2 fw-bold text-green text-uppercase text-green">Agenda PPATQ</h1>
                 <small class="mb-0">Kumpulan Agenda PPATQ RAUDLATUL FALAH</small>
             </div>
             <div class="row">

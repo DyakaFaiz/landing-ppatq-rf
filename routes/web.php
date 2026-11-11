@@ -7,6 +7,9 @@ $controller_path = 'App\Http\Controllers';
 
 
 Route::get('/', $controller_path .'\HomePageController@index')->name('HomePage');
+
+Route::get('/sitemap.xml', $controller_path .'\SeoController@sitemap')->name('sitemap');
+Route::get('/robots.txt', $controller_path .'\SeoController@robots')->name('robots');
 Route::get('/santri-random', $controller_path .'\HomePageController@getSantriRandom')->name('santriRandom');
 Route::get('/pegawai-random', $controller_path .'\HomePageController@getPegawaiRandom')->name('pegawaiRandom');
 Route::get('/about', $controller_path .'\HomePageController@About')->name('aboutPage');

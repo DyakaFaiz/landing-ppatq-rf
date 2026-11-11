@@ -2,6 +2,7 @@
 @section('title')
 <title>Layanan | PPATQ-RF</title>
 @endsection
+@section('description', "Layanan PPATQ Raudlatul Falah: pendaftaran santri baru (PSB), pembayaran, Sambung Rasa, aplikasi Mobile PPATQ, dan sosial media resmi.")
 @section('header')
 <style>
     #services .services-list {
@@ -63,7 +64,7 @@
                 <div class="container bootstrap snippets bootdey">
                     <div class="row text-center">
                         <div class="section-title text-center position-relative py-4 mb-4 mx-auto" style="max-width: 600px;">
-                            <h2 class="fw-bold text-green text-uppercase text-green">Layanan PPATQ</h2>
+                            <h1 class="h2 fw-bold text-green text-uppercase text-green">Layanan PPATQ</h1>
                         </div>
                     </div>
                     <div class="row">

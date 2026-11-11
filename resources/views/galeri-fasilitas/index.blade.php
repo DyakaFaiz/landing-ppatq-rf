@@ -1,7 +1,8 @@
 @extends('layout.main_layout')
 @section('title')
-<title>Galeri | PPATQ-RF</title>
+<title>Galeri & Fasilitas | PPATQ-RF</title>
 @endsection
+@section('description', "Galeri foto kegiatan dan fasilitas PPATQ Raudlatul Falah: asrama, madrasah, masjid, makan 3x sehari, laundry, serta kebutuhan santri baru.")
 @section('header')
 <style>
     .foto-seamless {
@@ -77,7 +78,7 @@
         <div class="row g-5">
             <div class="col-12 col-md-6">
                 <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-                    <h2 class="fw-bold text-green text-uppercase">Galeri PPATQ</h2>
+                    <h1 class="h2 fw-bold text-green text-uppercase">Galeri PPATQ</h1>
                     <small class="mb-0">Kumpulan foto di PPATQ RAUDLATUL FALAH</small>
                 </div>
                 @if (!empty($galeri) && count($galeri))

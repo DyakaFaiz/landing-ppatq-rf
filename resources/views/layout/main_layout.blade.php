@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
     @yield('title')
+    @include('layout.seo')
     @include('layout.head')
     @yield('header')
     <style>
@@ -24,11 +23,13 @@
 
     <div class="w-100 bg-white">
         <div class="col-lg-6 col-12 p-3 header-responsive gap-5">
-            <img src="{{asset('img/cropped-header-objectpatq.png')}}" width="100" alt="">
+            <img src="{{asset('img/cropped-header-objectpatq.png')}}" width="100" alt="Logo PPATQ Raudlatul Falah">
             <div class="d-flex flex-column">
-                <h2>
-                    PPATQ RAUDLATUL FALAH
-                </h2>
+                @if (request()->routeIs('HomePage'))
+                    <h1 class="h2">PPATQ RAUDLATUL FALAH</h1>
+                @else
+                    <p class="h2">PPATQ RAUDLATUL FALAH</p>
+                @endif
                 <p class="text-secondary"> Pondok Pesantren Anak-anak Tahfidzul Qur'an Raudlatul Falah – Pati </p> 
             </div>
         </div>
@@ -120,8 +121,6 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{asset('lib/wow/wow.min.js')}}"></script>
     <script src="{{asset('lib/easing/easing.min.js')}}"></script>
     <script src="{{asset('lib/waypoints/waypoints.min.js')}}"></script>

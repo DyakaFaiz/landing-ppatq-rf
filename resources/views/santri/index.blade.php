@@ -2,6 +2,7 @@
 @section('title')
     <title>Kesantrian | PPATQ-RF</title>
 @endsection
+@section('robots', 'noindex,follow')
 @section('header')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
@@ -59,7 +60,7 @@
             <!-- Calon -->
             <div class="row">
                 <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-                        <h2 class="fw-bold text-green text-uppercase text-green">Calon Santri</h2>
+                        <h1 class="h2 fw-bold text-green text-uppercase text-green">Calon Santri</h1>
                         <small class="mb-0">Daftar Calon Santri PPATQ RAUDLATUL FALAH</small>
                 </div>
             </div>

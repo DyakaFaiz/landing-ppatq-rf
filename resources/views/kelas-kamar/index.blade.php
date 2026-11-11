@@ -1,7 +1,8 @@
 @extends('layout.main_layout')
 @section('title')
-    <title>Kelas & kamar | PPATQ-RF</title>
+    <title>Kelas & Kamar Santri | PPATQ-RF</title>
 @endsection
+@section('description', "Daftar kelas dan kamar santri PPATQ Raudlatul Falah beserta wali kelas dan murroby.")
 @section('header')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
@@ -57,7 +58,7 @@
 <div class="container py-3 wow fadeInUp" data-wow-delay="0.1s">
     <div class="row g-4">
         <div class="col-12 col-md-5 col-lg-4">
-            <h4 class="fw-bold text-green text-uppercase text-center mb-3">Kelas Santri</h4>
+            <h1 class="h4 fw-bold text-green text-uppercase text-center mb-3">Kelas Santri</h1>
             @forelse ($kelasPerTingkat as $daftarKelas)
                 <div class="row g-2 mb-1">
                     @foreach ($daftarKelas as $kelas)

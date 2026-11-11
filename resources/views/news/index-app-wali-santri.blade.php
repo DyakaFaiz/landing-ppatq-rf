@@ -2,6 +2,7 @@
 @section('title')
 <title>Aplikasi Wali Santri | PPATQ-RF</title>
 @endsection
+@section('description', "Aplikasi Mobile Wali Santri PPATQ Raudlatul Falah untuk memantau akademik, ketahfidzan, dan kesehatan santri.")
 @section('header')
 <style>
     #services .services-list {
@@ -44,7 +45,7 @@
         <div class="row g-5">
             <div class="col-12">
                 <div class="section-title position-relative pb-3 mb-5">
-                    <h2 class="fw-bold text-green  text-uppercase">Aplikasi Mobile Wali Santri - PPATQ-RF</h2>
+                    <h1 class="h2 fw-bold text-green  text-uppercase">Aplikasi Mobile Wali Santri - PPATQ-RF</h1>
                     <small>
                         PPATQ RAUDLATUL FALAH - PATI
                     </small>

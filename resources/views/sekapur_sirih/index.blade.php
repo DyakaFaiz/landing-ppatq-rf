@@ -2,6 +2,7 @@
 @section('title')
 <title>Sekapur Sirih | PPATQ-RF</title>
 @endsection
+@section('description', "Sekapur sirih dan sambutan Ketua Dewan Pembina Yayasan serta Pengasuh PPATQ Raudlatul Falah.")
 
 
 @section('content')
@@ -10,7 +11,7 @@
         <div class="col-lg-6 p-5">
             <div class="text-center">
                 <img src="{{asset('img/KH.-Djaelani.png')}}" class="img-fluid mb-4" style="max-width: 200px;">
-                <h5 class="mb-3">SAMBUTAN KETUA DEWAN PEMBINA YAYASAN RAUDLATUL FALAH</h5>
+                <h1 class="h5 mb-3">SAMBUTAN KETUA DEWAN PEMBINA YAYASAN RAUDLATUL FALAH</h1>
                 <h4 class="mb-4">
                     السلام عليكم ورحمة الله وبركاته
 

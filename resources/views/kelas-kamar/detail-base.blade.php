@@ -69,7 +69,7 @@
         </a>
 
         <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-            <h2 class="fw-bold text-green text-uppercase">{{ $judul }}</h2>
+            <h1 class="h2 fw-bold text-green text-uppercase">{{ $judul }}</h1>
             <span class="badge-seamless mt-2">{{ $jumlahIsi }} santri</span>
         </div>
 

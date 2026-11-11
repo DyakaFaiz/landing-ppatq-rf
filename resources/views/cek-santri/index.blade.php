@@ -3,6 +3,7 @@
 @section('title')
     <title>Cek Santri - PPATQ Raudlatul Falah</title>
 @endsection
+@section('robots', 'noindex,follow')
 
 @section('header')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -152,7 +153,7 @@
             <!-- Section Title -->
             <div class="row">
                 <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-                    <h2 class="fw-bold text-green text-uppercase text-green">Cek Detail Santri</h2>
+                    <h1 class="h2 fw-bold text-green text-uppercase text-green">Cek Detail Santri</h1>
                     <small class="mb-0">PPATQ RAUDLATUL FALAH</small>
                 </div>
             </div>

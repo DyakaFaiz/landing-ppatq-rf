@@ -697,7 +697,8 @@ iframe {
         padding: 16px;
         gap: 1rem !important;
     }
-    .header-responsive h2 {
+    .header-responsive h2,
+    .header-responsive .h2 {
         font-size: 1.4rem;
     }
     .small-text {

@@ -2,11 +2,12 @@
 @section('title')
 <title>Visi Misi | PPATQ-RF</title>
 @endsection
+@section('description', "Visi dan misi PPATQ Raudlatul Falah, pondok pesantren anak-anak tahfidzul Qur'an di Pati.")
 @section('content')
 <div class="p-4 wow fadeInUp" data-wow-delay="0.1s">
     <div class="row">
         <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-            <h2 class="fw-bold text-green text-uppercase text-green">Visi Dan Misi</h2>
+            <h1 class="h2 fw-bold text-green text-uppercase text-green">Visi Dan Misi</h1>
             <small class="mb-0">PPATQ RAUDLATUL FALAH</small>
         </div>
     </div>

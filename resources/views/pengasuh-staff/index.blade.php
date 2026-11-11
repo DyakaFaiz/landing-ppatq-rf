@@ -2,6 +2,7 @@
 @section('title')
     <title>Pengasuh & Staff | PPATQ-RF</title>
 @endsection
+@section('description', "Daftar ustad, ustadzah, murroby, dan staff PPATQ Raudlatul Falah yang membimbing santri tahfidzul Qur'an.")
 @section('header')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
@@ -62,7 +63,7 @@
             @foreach ($kelompok as $key => $item)
                 <section class="mb-5">
                     <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-                        <h2 class="fw-bold text-green text-uppercase">{{ $item['judul'] }}</h2>
+                        <{{ $loop->first ? 'h1' : 'h2' }} class="h2 fw-bold text-green text-uppercase">{{ $item['judul'] }}</{{ $loop->first ? 'h1' : 'h2' }}>
                         <small class="mb-0">Daftar {{ $item['judul'] }} PPATQ RAUDLATUL FALAH</small>
                     </div>
                     <div class="d-flex justify-content-center px-3 mb-5">

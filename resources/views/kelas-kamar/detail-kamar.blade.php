@@ -7,6 +7,7 @@
 @section('title')
     <title>Kamar {{ $dataKamar->nama_kamar }} | PPATQ-RF</title>
 @endsection
+@section('robots', 'noindex,follow')
 
 @section('santri')
     @foreach ($query as $santri)

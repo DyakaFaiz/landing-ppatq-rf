@@ -1,8 +1,9 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <title>Privacy Policy for PPATQ-RF ku - TermsFeed</title>
+    <title>Kebijakan Privasi | PPATQ-RF</title>
+    <meta name="description" content="Kebijakan privasi aplikasi dan situs PPATQ Raudlatul Falah.">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">

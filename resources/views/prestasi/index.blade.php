@@ -2,6 +2,7 @@
 @section('title')
 <title>Prestasi | PPATQ-RF</title>
 @endsection
+@section('description', "Prestasi santri PPATQ Raudlatul Falah di berbagai bidang dan tingkat lomba.")
 @section('header')
 <style>
     .prestasi-card {
@@ -52,7 +53,7 @@
     <!-- Prestasi Start -->
     <div class="container-fluid py-4 wow fadeInUp" data-wow-delay="0.1s">
         <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-            <h2 class="fw-bold text-green text-uppercase text-green">Prestasi PPATQ</h2>
+            <h1 class="h2 fw-bold text-green text-uppercase text-green">Prestasi PPATQ</h1>
             <small class="mb-0">Kumpulan Prestasi PPATQ RAUDLATUL FALAH</small>
         </div>
 
