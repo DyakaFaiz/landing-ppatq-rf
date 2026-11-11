@@ -19,7 +19,6 @@
     display: flex;
     justify-content: end;
     border-radius: 6px;
-    border: 2px solid #373737;
     padding: 15px 8px 15px 10px;
     text-align: left;
 
@@ -843,4 +842,66 @@ img.zoomable {
 }
 #navbarSupportedContent ul li.nav-daftar a:hover {
     background: rgba(255, 255, 255, 0.2);
+}
+
+/********** Fasilitas, kebutuhan santri baru & buku laporan **********/
+.fasilitas-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    height: 100%;
+    padding: 8px 4px;
+}
+.fasilitas-ikon {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f8fcf9 0%, #e8f5ed 100%);
+    color: #198754;
+    font-size: 1.3rem;
+}
+.fasilitas-judul {
+    margin-bottom: 4px;
+    color: #1a5632;
+    font-weight: 800;
+    font-size: 1rem;
+}
+.fasilitas-teks {
+    color: #5c8c6d;
+    font-size: 0.9rem;
+}
+.termasuk-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border: 2px solid #d1e2d7;
+    border-radius: 16px;
+    color: #198754;
+    font-size: 1.3rem;
+}
+.termasuk-judul {
+    color: #1a5632;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.laporan-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #d1e2d7;
+    color: #1a5632;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.laporan-item .badge-seamless {
+    flex: 0 0 auto;
+    min-width: 34px;
+    text-align: center;
+    padding: 4px 8px;
 }
