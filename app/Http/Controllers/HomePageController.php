@@ -14,25 +14,27 @@ class HomePageController extends Controller
     public function index()
     {
         try {
-                $data['beritas'] = DB::table('berita')
+                // Berita & agenda: cache pendek supaya kabar baru cepat muncul
+                $data['beritas'] = Cache::remember('home.berita', 300, fn () => DB::table('berita')
                 ->select('id', 'judul', 'created_at', 'thumbnail', 'isi_berita')
                 ->whereNull('deleted_at')
                 ->orderBy('created_at', 'desc')
                 ->limit(3)
-                ->get()
+                ->get())
                 ->map(function ($item) {
+                    $item = clone $item;
                     $item->id = Crypt::encryptString($item->id . "ppatq");
                     return $item;
                 });
 
                 // Tanggal mulai selalu >= hari ini, jadi urut tanggal_mulai sama dengan jarak terdekat
-                $data['agendas'] = DB::table('agenda')
+                $data['agendas'] = Cache::remember('home.agenda', 300, fn () => DB::table('agenda')
                 ->select('judul', 'isi', 'tanggal_mulai')
                 ->whereNull('deleted_at')
                 ->where('tanggal_mulai', '>=', DB::raw('CURDATE()'))
                 ->orderBy('tanggal_mulai')
                 ->limit(5)
-                ->get();
+                ->get());
 
                 $statistik = Cache::remember('home.statistik', self::CACHE_TTL, function () {
                     $jumlahSantri = DB::table('santri_detail')

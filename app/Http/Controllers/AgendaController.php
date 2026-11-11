@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use DOMDocument;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class AgendaController extends Controller
@@ -31,21 +34,38 @@ class AgendaController extends Controller
     }
 
 
+    private const CACHE_TTL = 300;
+    private const PER_HALAMAN = 6;
+
     public function index(){
+        $halaman = max(1, (int) request()->query('page', 1));
 
-        // Panggil paginate langsung, tanpa get()
-        $queryAgenda = DB::table('agenda')
-        ->select('id', 'judul', 'isi', 'tanggal_mulai', 'tanggal_selesai', 'gambar', 'created_at')
-        ->whereNull('deleted_at')
-        ->orderBy("created_at", "desc")
-        ->paginate(6);
+        $total = Cache::remember('agenda.total', self::CACHE_TTL, fn () => DB::table('agenda')
+            ->whereNull('deleted_at')
+            ->count());
 
-        // Untuk setiap record agenda, tambahkan properti baru berisi teks dari tag <p>
-        foreach ($queryAgenda as $agendaItem) {
-            $agendaItem->isi_paragraph = $this->extractParagraphHTML($agendaItem->isi);
-        }
+        // Halaman di luar jangkauan: 404, bukan halaman kosong yang bisa diindeks
+        abort_if($halaman > max(1, (int) ceil($total / self::PER_HALAMAN)), 404);
 
-        $data['agenda'] = $queryAgenda;
+        $item = Cache::remember("agenda.halaman.$halaman", self::CACHE_TTL, function () use ($halaman) {
+            $agenda = DB::table('agenda')
+                ->select('id', 'judul', 'isi', 'tanggal_mulai', 'tanggal_selesai', 'gambar', 'created_at')
+                ->whereNull('deleted_at')
+                ->orderBy("created_at", "desc")
+                ->forPage($halaman, self::PER_HALAMAN)
+                ->get();
+
+            // Untuk setiap record agenda, tambahkan properti baru berisi teks dari tag <p>
+            foreach ($agenda as $agendaItem) {
+                $agendaItem->isi_paragraph = $this->extractParagraphHTML($agendaItem->isi);
+            }
+
+            return $agenda;
+        });
+
+        $data['agenda'] = (new LengthAwarePaginator(
+            $item, $total, self::PER_HALAMAN, $halaman, ['path' => Paginator::resolveCurrentPath()]
+        ))->withQueryString();
 
         return view('agenda.index', $data);
     }
