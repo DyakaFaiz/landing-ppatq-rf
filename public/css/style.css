@@ -108,6 +108,10 @@
 .navbar-mainbg {
     background-color: #2dcc70;
     padding: 0px;
+    transition: box-shadow 0.2s ease;
+}
+.navbar-mainbg.navbar-scrolled {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
 }
 #navbarSupportedContent {
     overflow: hidden;
