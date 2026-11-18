@@ -33,7 +33,7 @@
             'title' => 'Materi Didik',
             'icon' => 'bi-mortarboard',
             'desc' => '19 Mata Pelajaran Terpadu',
-            'badge' => 'Baru',
+            'badge' => null,
         ],
     ];
 @endphp
