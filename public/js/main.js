@@ -18,13 +18,12 @@
 
 
     // Sticky Navbar
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 45) {
-            $('.navbar').addClass('sticky-top shadow-sm');
-        } else {
-            $('.navbar').removeClass('sticky-top shadow-sm');
-        }
-    });
+    var $navbar = $('.navbar-mainbg');
+    function updateNavbar() {
+        $navbar.toggleClass('sticky-top navbar-scrolled', $(window).scrollTop() > 45);
+    }
+    $(window).on('scroll load', updateNavbar);
+    updateNavbar();
     
     // Dropdown on mouse hover
     const $dropdown = $(".dropdown");

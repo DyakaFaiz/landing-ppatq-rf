@@ -91,15 +91,6 @@
                                     </div>
                                     <div class="col-sm-6 col-md-4 col-md-4">
                                         <div class="service-block" style="visibility: visible;">
-                                            <div class="ico bi bi-envelope-arrow-up highlight text-success"></div>
-                                            <div class="text-block">
-                                                <div class="name">Sambung Rasa</div>
-                                                <div class="text text-justify">Layanan komunikasi dan konsultasi bagi wali santri untuk menyampaikan aspirasi atau menanyakan perkembangan santri. <a class="fs-6 fw-bold fst-italic" href="https://payment.ppatq-rf.id/index.php/keluhan">Disini</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-4 col-md-4">
-                                        <div class="service-block" style="visibility: visible;">
                                             <div class="ico bi bi-phone highlight text-success"></div>
                                             <div class="text-block">
                                                 <div class="name">Mobile PPATQ</div>

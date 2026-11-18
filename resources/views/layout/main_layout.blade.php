@@ -128,7 +128,7 @@
         </div>
     </nav>
    
-    <div class="bg-light border">
+    <div class="bg-light">
         @yield('content')
         <!-- Footer Start -->
             <div class="container">
