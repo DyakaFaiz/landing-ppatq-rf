@@ -207,6 +207,17 @@
 }
 
 @media (min-width: 992px) {
+    .hori-selector .right,
+    .hori-selector .left {
+        bottom: 0px !important;
+    }
+    .hori-selector.no-left .left,
+    #navbarSupportedContent[data-active-menu="home"] .hori-selector .left {
+        display: none !important;
+    }
+    .hori-selector.no-right .right {
+        display: none !important;
+    }
     .navbar-expand-custom {
         -ms-flex-flow: row nowrap;
         flex-flow: row nowrap;
@@ -1017,4 +1028,144 @@ img.zoomable {
     min-width: 34px;
     text-align: center;
     padding: 4px 8px;
+}
+
+/* Dropdown Menu Seputar PPATQ */
+#navbarSupportedContent .nav-item.dropdown {
+    position: relative !important;
+}
+
+#navbarSupportedContent .nav-item.dropdown > a:not(:only-child):after {
+    content: "\f107" !important; /* FontAwesome angle-down */
+    border: none !important;
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    display: inline-block !important;
+    margin-left: 8px !important;
+    font-size: 11px !important;
+    vertical-align: middle !important;
+    transition: transform 0.3s ease !important;
+}
+
+#navbarSupportedContent .nav-item.dropdown:hover > a:not(:only-child):after {
+    transform: rotate(180deg) !important;
+}
+
+#navbarSupportedContent .dropdown-menu {
+    display: none;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    min-width: 250px !important;
+    padding: 8px !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    border: none !important;
+    border-radius: 14px !important;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16) !important;
+    z-index: 9999 !important;
+    float: none !important;
+    list-style: none !important;
+}
+
+#navbarSupportedContent .dropdown-menu li {
+    float: none !important;
+    width: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    clear: both !important;
+    list-style: none !important;
+}
+
+#navbarSupportedContent .dropdown-menu li a.dropdown-item {
+    float: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    padding: 10px 16px !important;
+    margin: 2px 0 !important;
+    color: #2c3e50 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    background: transparent !important;
+    transition: all 0.2s ease !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+    line-height: 1.4 !important;
+    position: relative !important;
+}
+
+#navbarSupportedContent .dropdown-menu li a.dropdown-item:after {
+    display: none !important;
+    content: none !important;
+}
+
+#navbarSupportedContent .dropdown-menu li a.dropdown-item:hover {
+    background-color: #e6f4ea !important;
+    color: #1a5632 !important;
+    padding-left: 20px !important;
+}
+
+#navbarSupportedContent .dropdown-menu li a.dropdown-item i {
+    font-size: 1.1rem !important;
+    margin-right: 12px !important;
+    color: #198754 !important;
+    width: 20px;
+    text-align: center;
+}
+
+@media (min-width: 992px) {
+    #navbarSupportedContent {
+        overflow: visible !important;
+    }
+    .navbar-mainbg {
+        overflow: visible !important;
+    }
+    #navbarSupportedContent .nav-item.dropdown:hover .dropdown-menu {
+        display: block !important;
+        animation: fadeInDropdown 0.2s ease forwards;
+    }
+}
+
+@media (max-width: 991px) {
+    #navbarSupportedContent .dropdown-menu {
+        position: static !important;
+        float: none !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        border-radius: 8px !important;
+        margin: 4px 0 10px 0 !important;
+        padding: 6px 0 !important;
+        display: block !important;
+    }
+    #navbarSupportedContent .dropdown-menu li a.dropdown-item {
+        color: #ffffff !important;
+        padding: 10px 20px 10px 42px !important;
+        font-size: 14px !important;
+    }
+    #navbarSupportedContent .dropdown-menu li a.dropdown-item i {
+        color: #ffffff !important;
+    }
+    #navbarSupportedContent .dropdown-menu li a.dropdown-item:hover {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
+        padding-left: 48px !important;
+    }
+}
+
+@keyframes fadeInDropdown {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

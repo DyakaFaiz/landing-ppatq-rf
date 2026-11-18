@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Support\SlugBerita;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
@@ -130,18 +131,22 @@ class HomePageController extends Controller
         return $headers !== false && str_contains($headers[0], '200');
     }
     
-    public function About(){
+    public function About(Request $request){
         $data['about'] = Cache::remember('about', self::CACHE_TTL, fn () => DB::table('about')
         ->select('about.*')
         ->first());
 
+        $validTabs = ['visi-misi', 'metode', 'jadwal', 'laporan', 'materi-didik'];
+        $tab = $request->query('tab', 'visi-misi');
+        $data['activeTab'] = in_array($tab, $validTabs, true) ? $tab : 'visi-misi';
+
         return view('About.index', $data);
     }
     public function visimisi(){
-        return view('visimisi.index');
+        return redirect()->route('aboutPage', ['tab' => 'visi-misi']);
     }
     public function sekapursirih(){
-        return view('sekapur_sirih.index');
+        return redirect()->route('aboutPage', ['tab' => 'visi-misi']);
     }
  
     

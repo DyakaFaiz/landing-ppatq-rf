@@ -59,8 +59,43 @@
                 <li class="nav-item" id="home">
                     <a class="nav-link" href="{{Route('HomePage')}}" name="homePage">Home</a>
                 </li>
-                <li class="nav-item" id="about">
-                    <a class="nav-link" href="{{Route('aboutPage')}}" name="aboutPage">Seputar PPATQ</a>
+                <li class="nav-item dropdown" id="about">
+                    <a class="nav-link dropdown-toggle" href="{{Route('aboutPage')}}" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" name="aboutPage">
+                        Seputar PPATQ
+                    </a>
+                    <ul class="dropdown-menu shadow border-0" aria-labelledby="aboutDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{Route('aboutPage', ['tab' => 'visi-misi'])}}">
+                                <i class="bi bi-compass"></i>
+                                <span>Visi &amp; Misi</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{Route('aboutPage', ['tab' => 'metode'])}}">
+                                <i class="bi bi-book-half"></i>
+                                <span>Metode Pembelajaran</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{Route('aboutPage', ['tab' => 'jadwal'])}}">
+                                <i class="bi bi-calendar3"></i>
+                                <span>Jadwal Kegiatan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{Route('aboutPage', ['tab' => 'laporan'])}}">
+                                <i class="bi bi-clipboard-check"></i>
+                                <span>Buku Laporan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{Route('aboutPage', ['tab' => 'materi-didik'])}}">
+                                <i class="bi bi-mortarboard"></i>
+                                <span>Materi Didik</span>
+                                <span class="badge bg-warning text-dark ms-auto" style="font-size: 0.65rem;">Baru</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item" id="berita">
                     <a class="nav-link" href="{{Route('berita')}}">Berita</a>
@@ -167,13 +202,25 @@
                 if (!$item.length || !$nav.is(':visible')) { return false; }
 
                 var pos = $item.position();
+                var isDesktop = window.innerWidth >= 992;
+                var h = isDesktop ? Math.max(0, $item.innerHeight() - 10) : $item.innerHeight();
+
                 if (!animate) { $selector.css('transition', 'none'); }
                 $selector.css({
                     top: pos.top + 'px',
                     left: pos.left + 'px',
-                    height: $item.innerHeight() + 'px',
+                    height: h + 'px',
                     width: $item.innerWidth() + 'px'
                 });
+
+                if (isDesktop) {
+                    $selector.toggleClass('no-left', pos.left <= 5);
+                    var maxLeft = $nav.innerWidth() - $item.innerWidth() - 5;
+                    $selector.toggleClass('no-right', pos.left >= maxLeft);
+                } else {
+                    $selector.removeClass('no-left no-right');
+                }
+
                 if (!animate) {
                     $selector[0].offsetHeight; // paksa reflow sebelum transisi dinyalakan lagi
                     $selector.css('transition', '');
