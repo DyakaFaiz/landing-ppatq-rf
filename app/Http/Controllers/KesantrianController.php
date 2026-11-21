@@ -36,7 +36,16 @@ class KesantrianController extends Controller
                 'ref_kamar.employee_id AS kamar_employee_id',
                 'ref_kelas.employee_id AS kelas_employee_id',
                 'guru_murroby.nama AS guru_murroby',
-                'wali_kelas.nama AS wali_kelas'
+                'wali_kelas.nama AS wali_kelas',
+                DB::raw('(
+                    SELECT kj.nama 
+                    FROM detail_santri_tahfidz dst
+                    JOIN kode_juz kj ON kj.id = dst.kode_juz_surah
+                    WHERE dst.no_induk = santri_detail.no_induk
+                      AND dst.deleted_at IS NULL
+                    ORDER BY dst.tanggal DESC, dst.id DESC
+                    LIMIT 1
+                ) AS capaian_juz')
             )
             ->leftJoin('ref_kamar', 'santri_detail.kamar_id', '=', 'ref_kamar.id')
             ->leftJoin('ref_kelas', 'santri_detail.kelas', '=', 'ref_kelas.code')
@@ -56,7 +65,16 @@ class KesantrianController extends Controller
                 'ref_kelas.employee_id AS kelas_employee_id',
                 'guru_murroby.nama AS guru_murroby',
                 'wali_kelas.nama AS wali_kelas',
-                'tb_alumni.angkatan as angkatan'
+                'tb_alumni.angkatan as angkatan',
+                DB::raw('(
+                    SELECT kj.nama 
+                    FROM detail_santri_tahfidz dst
+                    JOIN kode_juz kj ON kj.id = dst.kode_juz_surah
+                    WHERE dst.no_induk = tbAlumni.no_induk
+                      AND dst.deleted_at IS NULL
+                    ORDER BY dst.tanggal DESC, dst.id DESC
+                    LIMIT 1
+                ) AS capaian_juz')
             )
             ->leftJoin('tb_alumni', 'tbAlumni.no_induk', '=', 'tb_alumni.no_induk')
             ->leftJoin('ref_kamar', 'tbAlumni.kamar_id', '=', 'ref_kamar.id')
@@ -196,6 +214,10 @@ class KesantrianController extends Controller
             }
         } else {
             $row->tanggal_khatam_formatted = null;
+        }
+
+        if (!isset($row->capaian_juz) || empty(trim((string)$row->capaian_juz))) {
+            $row->capaian_juz = '-';
         }
 
         return $row;

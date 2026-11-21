@@ -77,12 +77,26 @@
             background: #ffffff;
             border: 1px solid #e6ede8;
             border-radius: 16px;
+            overflow: hidden;
             transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
         .santri-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 24px rgba(25, 135, 84, 0.1) !important;
             border-color: #bbf7d0;
+        }
+        .card-nama-santri {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #1a5632;
+            margin-bottom: 4px;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
         .santri-avatar {
             width: 68px;
@@ -233,8 +247,8 @@
                                                  alt="{{ $santri->nama }}"
                                                  onerror="this.onerror=null; this.src='{{ asset('img/avatar-siluet.svg') }}';">
                                         </div>
-                                        <div class="flex-grow-1 min-w-0">
-                                            <h6 class="fw-bold text-green-brand mb-1 text-truncate" title="{{ $santri->nama }}">
+                                        <div class="flex-grow-1" style="min-width: 0; overflow: hidden;">
+                                            <h6 class="card-nama-santri" title="{{ $santri->nama }}">
                                                 {{ $santri->nama }}
                                             </h6>
                                             <div class="d-flex flex-wrap gap-1 align-items-center">
@@ -249,6 +263,10 @@
                                     </div>
                                     <hr class="my-2 border-light-subtle">
                                     <div class="d-flex flex-column gap-1">
+                                        <div class="card-detail-item d-flex align-items-center text-truncate">
+                                            <i class="bi bi-book text-success"></i>
+                                            <span class="text-truncate">Capaian Juz: <strong class="text-dark">{{ $santri->capaian_juz ?? '-' }}</strong></span>
+                                        </div>
                                         @if (!empty($santri->guru_murroby))
                                             <div class="card-detail-item d-flex align-items-center text-truncate">
                                                 <i class="bi bi-person-heart text-success"></i>
@@ -311,8 +329,8 @@
                                                  alt="{{ $alumni->nama }}"
                                                  onerror="this.onerror=null; this.src='{{ asset('img/avatar-siluet.svg') }}';">
                                         </div>
-                                        <div class="flex-grow-1 min-w-0">
-                                            <h6 class="fw-bold text-green-brand mb-1 text-truncate" title="{{ $alumni->nama }}">
+                                        <div class="flex-grow-1" style="min-width: 0; overflow: hidden;">
+                                            <h6 class="card-nama-santri" title="{{ $alumni->nama }}">
                                                 {{ $alumni->nama }}
                                             </h6>
                                             <div class="d-flex flex-wrap gap-1 align-items-center">
@@ -394,8 +412,8 @@
                                                  alt="{{ $khotimin->nama }}"
                                                  onerror="this.onerror=null; this.src='{{ asset('img/avatar-siluet.svg') }}';">
                                         </div>
-                                        <div class="flex-grow-1 min-w-0">
-                                            <h6 class="fw-bold text-green-brand mb-1 text-truncate" title="{{ $khotimin->nama }}">
+                                        <div class="flex-grow-1" style="min-width: 0; overflow: hidden;">
+                                            <h6 class="card-nama-santri" title="{{ $khotimin->nama }}">
                                                 {{ $khotimin->nama }}
                                             </h6>
                                             <div class="d-flex flex-wrap gap-1 align-items-center">
@@ -491,6 +509,7 @@
                 var photo = s.photo ? ('https://manajemen.ppatq-rf.id/assets/img/upload/photo/' + s.photo) : defaultAvatar;
                 var kelasBadge = s.kelas ? `<span class="badge badge-soft-success rounded-pill">Kelas ${s.kelas}</span>` : '';
                 var nisBadge = s.no_induk ? `<span class="badge badge-soft-secondary rounded-pill">NIS: ${s.no_induk}</span>` : '';
+                var capaianJuz = (s.capaian_juz && s.capaian_juz.trim() !== '') ? s.capaian_juz : '-';
                 
                 var murrobyRow = s.guru_murroby ? `
                     <div class="card-detail-item d-flex align-items-center text-truncate">
@@ -517,8 +536,8 @@
                             <div class="flex-shrink-0">
                                 <img src="${photo}" class="santri-avatar" alt="${s.nama}" onerror="this.onerror=null; this.src='${defaultAvatar}';">
                             </div>
-                            <div class="flex-grow-1 min-w-0">
-                                <h6 class="fw-bold text-green-brand mb-1 text-truncate" title="${s.nama}">${s.nama}</h6>
+                            <div class="flex-grow-1" style="min-width: 0; overflow: hidden;">
+                                <h6 class="card-nama-santri" title="${s.nama}">${s.nama}</h6>
                                 <div class="d-flex flex-wrap gap-1 align-items-center">
                                     ${kelasBadge}
                                     ${nisBadge}
@@ -527,6 +546,10 @@
                         </div>
                         <hr class="my-2 border-light-subtle">
                         <div class="d-flex flex-column gap-1">
+                            <div class="card-detail-item d-flex align-items-center text-truncate">
+                                <i class="bi bi-book text-success"></i>
+                                <span class="text-truncate">Capaian Juz: <strong class="text-dark">${capaianJuz}</strong></span>
+                            </div>
                             ${murrobyRow}
                             ${waliRow}
                             ${asalRow}
@@ -575,8 +598,8 @@
                             <div class="flex-shrink-0">
                                 <img src="${photo}" class="santri-avatar" alt="${a.nama}" onerror="this.onerror=null; this.src='${defaultAvatar}';">
                             </div>
-                            <div class="flex-grow-1 min-w-0">
-                                <h6 class="fw-bold text-green-brand mb-1 text-truncate" title="${a.nama}">${a.nama}</h6>
+                            <div class="flex-grow-1" style="min-width: 0; overflow: hidden;">
+                                <h6 class="card-nama-santri" title="${a.nama}">${a.nama}</h6>
                                 <div class="d-flex flex-wrap gap-1 align-items-center">
                                     ${lulusBadge}
                                     ${angkatanBadge}
@@ -635,8 +658,8 @@
                             <div class="flex-shrink-0">
                                 <img src="${photo}" class="santri-avatar" alt="${k.nama}" onerror="this.onerror=null; this.src='${defaultAvatar}';">
                             </div>
-                            <div class="flex-grow-1 min-w-0">
-                                <h6 class="fw-bold text-green-brand mb-1 text-truncate" title="${k.nama}">${k.nama}</h6>
+                            <div class="flex-grow-1" style="min-width: 0; overflow: hidden;">
+                                <h6 class="card-nama-santri" title="${k.nama}">${k.nama}</h6>
                                 <div class="d-flex flex-wrap gap-1 align-items-center">
                                     <span class="badge badge-gold rounded-pill">
                                         <i class="bi bi-patch-check-fill me-1"></i>30 Juz
