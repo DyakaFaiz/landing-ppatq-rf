@@ -27,6 +27,8 @@ class KesantrianController extends Controller
     {
         return DB::table('santri_detail')
             ->select(
+                'santri_detail.id',
+                'santri_detail.no_induk',
                 'santri_detail.nama',
                 'santri_detail.photo',
                 'santri_detail.kelas',
@@ -41,7 +43,7 @@ class KesantrianController extends Controller
             ->leftJoin('employee_new AS guru_murroby', 'ref_kamar.employee_id', '=', 'guru_murroby.id')
             ->leftJoin('employee_new AS wali_kelas', 'ref_kelas.employee_id', '=', 'wali_kelas.id')
             ->whereNull('santri_detail.deleted_at')
-            ->inRandomOrder();
+            ->orderBy('santri_detail.nama', 'asc');
     }
 
     private function alumniQuery()
@@ -61,16 +63,54 @@ class KesantrianController extends Controller
             ->leftJoin('ref_kelas', 'tbAlumni.kelas', '=', 'ref_kelas.code')
             ->leftJoin('employee_new AS guru_murroby', 'ref_kamar.employee_id', '=', 'guru_murroby.id')
             ->leftJoin('employee_new AS wali_kelas', 'ref_kelas.employee_id', '=', 'wali_kelas.id')
-            ->inRandomOrder();
+            ->orderBy('tbAlumni.nama', 'asc');
     }
 
-    public function index()
+    /**
+     * Query data Alumni Khotimin:
+     * Mengambil dari tabel resmi tbl_khotimin.
+     * Berelasi dengan santri_detail jika santri aktif (tipe_santri = 'santri')
+     * maupun tb_alumni_santri_detail jika santri tidak aktif / alumni (tipe_santri = 'alumni').
+     */
+    private function khotiminQuery()
     {
-        // Daftar calon dan santri aktif tidak menampilkan link halaman, jadi tidak perlu COUNT(*)
+        $baseQuery = DB::table('tbl_khotimin')
+            ->leftJoin('santri_detail', function ($join) {
+                $join->on('tbl_khotimin.santri_id', '=', 'santri_detail.id')
+                     ->orOn('tbl_khotimin.kode_santri', '=', 'santri_detail.no_induk');
+            })
+            ->leftJoin('tb_alumni_santri_detail', 'tbl_khotimin.kode_santri', '=', 'tb_alumni_santri_detail.no_induk')
+            ->select([
+                DB::raw("COALESCE(santri_detail.nama, tb_alumni_santri_detail.nama, 'Santri') AS nama"),
+                DB::raw("COALESCE(santri_detail.no_induk, tb_alumni_santri_detail.no_induk, tbl_khotimin.kode_santri) AS no_induk"),
+                DB::raw("COALESCE(santri_detail.photo, tb_alumni_santri_detail.photo) AS photo"),
+                DB::raw("COALESCE(tbl_khotimin.kelas, santri_detail.kelas, tb_alumni_santri_detail.kelas) AS kelas"),
+                DB::raw("COALESCE(santri_detail.kecamatan, tb_alumni_santri_detail.kecamatan) AS kecamatan"),
+                'tbl_khotimin.tanggal_khatam AS tanggal_khatam',
+                'tbl_khotimin.keterangan AS keterangan',
+                DB::raw("CASE 
+                    WHEN tbl_khotimin.tipe_santri = 'santri' OR (santri_detail.id IS NOT NULL AND (santri_detail.status = 0 OR santri_detail.status IS NULL) AND santri_detail.deleted_at IS NULL) THEN 'Santri Aktif'
+                    ELSE 'Alumni'
+                END AS status_tipe"),
+                DB::raw("COALESCE(YEAR(tbl_khotimin.tanggal_khatam), tb_alumni_santri_detail.khotmil_quran, tb_alumni_santri_detail.tahun_lulus) AS tahun_info")
+            ]);
+
+        return DB::query()->fromSub($baseQuery, 'khotimin_combined')->orderBy('nama', 'asc');
+    }
+
+    public function index(Request $request)
+    {
+        $validTabs = ['santri-aktif', 'alumni', 'khotimin'];
+        $activeTab = $request->query('tab', 'santri-aktif');
+        if (!in_array($activeTab, $validTabs, true)) {
+            $activeTab = 'santri-aktif';
+        }
+
         $data = [
-            'santriAktif'  => $this->santriAktifQuery()->limit(6)->get()->map(fn ($row) => $this->rapikanTeks($row)),
-            'santriAlumni' => $this->alumniQuery()->paginate(4)->through(fn ($row) => $this->rapikanTeks($row)),
-            'santriCalon'  => $this->calonSantriQuery()->limit(4)->get()->map(fn ($row) => $this->rapikanTeks($row)),
+            'activeTab'      => $activeTab,
+            'santriAktif'    => $this->santriAktifQuery()->paginate(self::PER_PAGE, ['*'], 'page_santri')->withQueryString()->through(fn ($row) => $this->rapikanTeks($row)),
+            'santriAlumni'   => $this->alumniQuery()->paginate(self::PER_PAGE, ['*'], 'page_alumni')->withQueryString()->through(fn ($row) => $this->rapikanTeks($row)),
+            'santriKhotimin' => $this->khotiminQuery()->paginate(self::PER_PAGE, ['*'], 'page_khotimin')->withQueryString()->through(fn ($row) => $this->rapikanTeks($row)),
         ];
 
         return view('santri.index', $data);
@@ -80,6 +120,7 @@ class KesantrianController extends Controller
     {
         return $this->searchResponse($this->santriAktifQuery(), $request->input('search'), [
             'santri_detail.nama',
+            'santri_detail.no_induk',
             'santri_detail.kelas',
             'santri_detail.kecamatan',
             'guru_murroby.nama',
@@ -91,11 +132,27 @@ class KesantrianController extends Controller
     {
         return $this->searchResponse($this->alumniQuery(), $request->input('search'), [
             'tbAlumni.nama',
+            'tbAlumni.no_induk',
             'tbAlumni.kelas',
             'tbAlumni.kecamatan',
+            'tb_alumni.angkatan',
+            'tbAlumni.tahun_lulus',
             'guru_murroby.nama',
             'wali_kelas.nama',
             'tbAlumni.no_hp',
+        ]);
+    }
+
+    public function get_khotimin(Request $request)
+    {
+        return $this->searchResponse($this->khotiminQuery(), $request->input('search'), [
+            'nama',
+            'no_induk',
+            'kelas',
+            'status_tipe',
+            'keterangan',
+            'tahun_info',
+            'kecamatan',
         ]);
     }
 
@@ -129,6 +186,16 @@ class KesantrianController extends Controller
                 'P'     => 'Perempuan',
                 default => trim($row->jenis_kelamin),
             };
+        }
+
+        if (isset($row->tanggal_khatam) && !empty($row->tanggal_khatam)) {
+            try {
+                $row->tanggal_khatam_formatted = \Carbon\Carbon::parse($row->tanggal_khatam)->translatedFormat('d F Y');
+            } catch (\Throwable $e) {
+                $row->tanggal_khatam_formatted = $row->tanggal_khatam;
+            }
+        } else {
+            $row->tanggal_khatam_formatted = null;
         }
 
         return $row;

@@ -22,6 +22,7 @@ Route::get('/kesantrian', $controller_path .'\KesantrianController@index')->name
 Route::post('/get_santri', $controller_path .'\KesantrianController@get_santri')->name('get_santri');
 Route::post('/get_alumni', $controller_path .'\KesantrianController@get_alumni')->name('get_alumni');
 Route::post('/get_calon_santri', $controller_path .'\KesantrianController@get_calon_santri')->name('get_calon_santri');
+Route::post('/get_khotimin', $controller_path .'\KesantrianController@get_khotimin')->name('get_khotimin');
 
 Route::get('/galeri-fasilitas', $controller_path .'\GaleriFasilitasController@index')->name('galeri-fasilitas');
 

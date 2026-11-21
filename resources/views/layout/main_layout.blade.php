@@ -109,8 +109,30 @@
                 <li class="nav-item" id="pengasuh-staff">
                     <a class="nav-link" href="{{Route('pengasuh-staff')}}">Staff & Pengasuh</a>
                 </li>
-                <li class="nav-item" id="kesantrian">
-                    <a class="nav-link" href="{{Route('kesantrian')}}">Kesantrian</a>
+                <li class="nav-item dropdown" id="kesantrian">
+                    <a class="nav-link dropdown-toggle" href="{{Route('kesantrian')}}" id="kesantrianDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" name="kesantrianPage">
+                        Kesantrian
+                    </a>
+                    <ul class="dropdown-menu shadow border-0" aria-labelledby="kesantrianDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{Route('kesantrian', ['tab' => 'santri-aktif'])}}">
+                                <i class="bi bi-people-fill"></i>
+                                <span>Santri Aktif</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{Route('kesantrian', ['tab' => 'alumni'])}}">
+                                <i class="bi bi-mortarboard-fill"></i>
+                                <span>Alumni</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{Route('kesantrian', ['tab' => 'khotimin'])}}">
+                                <i class="bi bi-award-fill"></i>
+                                <span>Alumni Khotimin</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item" id="prestasi">
                     <a class="nav-link" href="{{Route('prestasi')}}">Prestasi</a>
